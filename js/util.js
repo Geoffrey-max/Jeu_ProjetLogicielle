@@ -25,7 +25,7 @@ var rectAt = (aPos, aSize, bPos, bSize) => {
 var obstacleAt = (pos, size, obstacles) => {
   var result = [];
   obstacles.forEach(obstacle => {
-    if (rectAt(pos, size, obstacle.pos, obstacle.size)) {
+    if (rectAt(pos, size, obstacle.obstacle.pos, obstacle.obstacle.size)) {
       result.push(obstacle);
     };
   });

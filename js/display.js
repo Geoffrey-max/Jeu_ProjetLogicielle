@@ -6,6 +6,8 @@ class Display {
     this.playerSprite.src = "img/Sprite2.jpg";
     this.canvasSprite = document.createElement("img");
     this.canvasSprite.src = "img/tile.png";
+    this.obstacleSprite = document.createElement("img");
+    this.obstacleSprite.src = "img/Sprite2.jpg";
     this.game = game;
 
     this.canvas = document.createElement("canvas");
@@ -26,14 +28,12 @@ class Display {
         player.size.x * this.zoom,
         player.size.y * this.zoom)
 
-      this.cx.fillStyle = "yellow";
       this.game.obstacles.forEach(obstacle => {
-        this.cx.fillRect(
-          obstacle.pos.x * this.zoom,
-          obstacle.pos.y * this.zoom,
-          obstacle.size.x * this.zoom,
-          obstacle.size.y * this.zoom
-        );
+        this.cx.drawImage(this.obstacleSprite, 0, 0, 432, 400,
+          obstacle.obstacle.pos.x * this.zoom,
+          obstacle.obstacle.pos.y * this.zoom,
+          obstacle.obstacle.size.x * this.zoom,
+          obstacle.obstacle.size.y * this.zoom)
       });
 
       this.cx.fillStyle = "blue";

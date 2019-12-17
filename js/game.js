@@ -10,16 +10,23 @@ class Game {
 
     this.obstacles = [
       {
-        color: "yellow",
-        pos: new Vector2D(0, 100),
-        size: new Vector2D(300, 16)
+        obstacle: new Obstacle(new Image(432, 400), new Vector2D(128, 64), new Vector2D(0, 100))
       },
       {
-        color: "yellow",
-        pos: new Vector2D(400, 100),
-        size: new Vector2D(300, 16)
+        obstacle: new Obstacle(new Image(432, 400), new Vector2D(128, 64), new Vector2D(300, 100))
+      },
+      {
+        obstacle: new Obstacle(null, new Vector2D(480, 0), new Vector2D(0, 0))
+      },
+      {
+        obstacle: new Obstacle(null, new Vector2D(480, 0), new Vector2D(0, 270))
+      },
+      {
+        obstacle: new Obstacle(null, new Vector2D(0, 270), new Vector2D(480, 0))
+      },
+      {
+        obstacle: new Obstacle(null, new Vector2D(0, 270), new Vector2D(0, 0))
       }
-
     ]
 
     this.gravity = new Vector2D(0, 0);
