@@ -12,6 +12,7 @@ class Game {
     };
     this.cursor = 0;
     this.mainmenuOptionList = ["newGame", "ranking"];
+    this.endMenuOptionList = ["restart", "selectNewMap", "ranking", "main"]
     this.gameState = this.gameStateEnum.MAINMENU;
 
     this.player = new Player("red", new Vector2D(0, 0), new Vector2D(32, 32));
@@ -52,7 +53,7 @@ class Game {
 
       this.player.update(this);
       // this.cx.drawImage(this.canvasSprite, 0, 0, 384, 256, 0, 0, this.canvas.width, this.canvas.height);
-      
+
       this.lastKeys = new Map([
         ["left", keys.get("left")],
         ["up", keys.get("up")],
@@ -81,10 +82,10 @@ class Game {
 
     this.updateMainMenu = () => {
       var nbMenu = this.mainmenuOptionList.length;
-      this.keys.forEach((input, id) => {
-        this.lastKeys.forEach((lastinput, lastid) => {
+      this.keys.forEach((keys, id) => {
+        this.lastKeys.forEach((lastkeys, lastid) => {
           if (id === lastid) {
-            if (input.a && !lastinput.a) {
+            if (keys.a && !lastkeys.a) {
               var currmenu = this.mainmenuOptionList[this.cursor];
               switch (currmenu) {
                 case this.mainmenuOptionList[0]:
@@ -95,34 +96,32 @@ class Game {
                     this.mainmenuOptionList[this.cursor]
                   );
                   break;
-                case this.endMenuOptionList[2]:
-                  console.log("go to NewGAME");
-                  this.fight = new Fight(this.player1, this.stage);
-                  this.gameState = this.gameStateEnum.FIGHT;
+                case this.mainMenuOptionList[1]:
+                  this.gameState = this.gameStateEnum.RANKING;
                   break;
                 default:
                   break;
               }
             }
-            if (input.up && !lastinput.up)
+            if (keys.up && !lastkeys.up)
               this.cursor = (((this.cursor - 1) % nbMenu) + nbMenu) % nbMenu;
-            if (input.down && !lastinput.down)
+            if (keys.down && !lastkeys.down)
               this.cursor = (this.cursor + 1) % nbMenu;
           }
         });
       });
     };
     this.updateEndMenu = () => {
-      this.keys.forEach((input, id) => {
-        this.lastKeys.forEach((lastinput, lastid) => {
+      this.keys.forEach((keys, id) => {
+        this.lastKeys.forEach((lastkeys, lastid) => {
           if (id === lastid) {
-            if (input.a && !lastinput.a) {
+            if (keys.a && !lastkeys.a) {
               // console.log("a : " + id);
               var currmenu = this.endMenuOptionList[this.cursor];
               switch (currmenu) {
                 case this.endMenuOptionList[0]:
-                  console.log("go to MAIN");
-                  this.gameState = this.gameStateEnum.MAINMENU;
+                  console.log("go to restart");
+                  this.gameState = this.gameStateEnum.FIGHT;
                   break;
                 case this.endMenuOptionList[1]:
                   console.log("go to CHARARTERSELECTION");
@@ -130,21 +129,24 @@ class Game {
                   break;
                 case this.endMenuOptionList[2]:
                   console.log("go to NewGAME");
-                  this.fight = new Fight(this.player1, this.stage);
-                  this.gameState = this.gameStateEnum.FIGHT;
+                  this.gameState = this.gameStateEnum.RANKING;
+                  break;
+                case this.endMenuOptionList[3]:
+                  console.log("go to Home");
+                  this.gameState = this.gameStateEnum.MAINMENU;
                   break;
                 default:
                   break;
               }
             }
-            if (input.up && !lastinput.up) {
+            if (keys.up && !lastkeys.up) {
               this.cursor =
                 (((this.cursor - 1) % this.endMenuOptionList.length) +
                   this.endMenuOptionList.length) %
                 this.endMenuOptionList.length;
               // console.log("up : " + this.cursor);
             }
-            if (input.down && !lastinput.down) {
+            if (keys.down && !lastkeys.down) {
               this.cursor =
                 (((this.cursor + 1) % this.endMenuOptionList.length) +
                   this.endMenuOptionList.length) %
