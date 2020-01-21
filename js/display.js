@@ -14,6 +14,8 @@ class Display {
     this.firtThemeSprite.src = "img/perso.png";
     this.cursorSprite = document.createElement("img");
     this.cursorSprite.src = "img/cursor.png";
+    this.lightningCursor = document.createElement("img");
+    this.lightningCursor.src = "img/bolt1.png";
     this.game = game;
 
     this.canvas = document.createElement("canvas");
@@ -92,22 +94,52 @@ class Display {
         this.firtThemeSprite,
         0,
         0,
-        (this.canvas.height*this.firtThemeSprite.width)/this.firtThemeSprite.height,
+        (this.canvas.height * this.firtThemeSprite.width) /
+          this.firtThemeSprite.height,
         this.canvas.height
       );
 
-      this.cx.fillStyle = "red";
-      this.cx.strokeStyle = "white";
-      this.cx.font = " " + 30 * this.zoom + "pt consolas";
+      this.cx.fillStyle = "white";
+      this.cx.strokeStyle = "red";
+      this.cx.font = " " + 30 * this.zoom + "pt Ancherr";
 
-      this.cx.fillText(" APOCALYPSE", 50, 60);
-      this.cx.strokeText(" APOCALYPSE", 50, 60);
-      this.cx.fillText(" MILITARY", 60, 90);
-      this.cx.strokeText(" MILITARY", 60, 90);
+      this.cx.fillText(" APOCALYPSE", 270 * this.zoom, 60 * this.zoom);
+      this.cx.strokeText(" APOCALYPSE", 270 * this.zoom, 60 * this.zoom);
+      this.cx.fillText(" MILITARY", 290 * this.zoom, 90 * this.zoom);
+      this.cx.strokeText(" MILITARY", 290 * this.zoom, 90 * this.zoom);
+
+      this.cx.font = " " + 15 * this.zoom + "pt Ancherr";
+      this.cx.fillText(" New Game", 320 * this.zoom, 150 * this.zoom);
+      this.cx.strokeText(" New Game", 320 * this.zoom, 150 * this.zoom);
+      this.cx.fillText(" Ranking", 325 * this.zoom, 180 * this.zoom);
+      this.cx.strokeText(" Ranking", 325 * this.zoom, 180 * this.zoom);
+
+      switch (this.game.cursor) {
+        case 0:
+          this.cx.drawImage(
+            this.lightningCursor,
+            321 * this.zoom,
+            153 * this.zoom,
+            70 * this.zoom,
+            10*this.zoom
+          );
+          break;
+        case 1:
+          this.cx.drawImage(
+            this.lightningCursor,
+            321 * this.zoom,
+            183 * this.zoom,
+            70 * this.zoom,
+            10*this.zoom
+
+          );
+          break;
+
+        default:
+          break;
+      }
     };
 
-
-    
     this.displayGame = () => {
       var player = this.game.player;
 

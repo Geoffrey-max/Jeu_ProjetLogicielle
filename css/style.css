@@ -1,3 +1,8 @@
+@font-face{
+  font-family: "Ancherr";
+  src: url('../font/Ancherr-Personal-Use.otf')format("OpenType");
+}
+
 html,
 body {
   width: 100%;
