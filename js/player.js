@@ -6,7 +6,7 @@ class Player {
         this.size = size;
         this.speed = new Vector2D(0, 0);
         this.jumpSpeed = 5;
-        this.walkSpeed = 2;
+        this.walkSpeed = 10;
 
 
         this.moveX = game => {
