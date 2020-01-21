@@ -79,6 +79,9 @@ class Game {
         case this.gameStateEnum.CHARACTERSELECTION:
           this.updateCharacterSelection();
           break;
+        case this.gameStateEnum.MAPSELECTION:
+          this.updateMapSelection();
+          break;
         case this.gameStateEnum.GAME:
           this.updateGame();
           break;
