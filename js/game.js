@@ -20,8 +20,13 @@ class Game {
     this.cursor = 0;
     this.mainmenuOptionList = ["newGame", "ranking"];
     this.endMenuOptionList = ["restart", "selectNewMap", "ranking", "main"];
+
+    // Dev env--------------
     this.characterSelection = new CharacterSelection(this);
-    this.gameState = this.gameStateEnum.CHARACTERSELECTION;
+    this.ranking = new Ranking(this);
+    // ---------------------
+    
+    this.gameState = this.gameStateEnum.RANKING;
 
     this.player = new Player("red", new Vector2D(0, 0), new Vector2D(32, 32));
 
@@ -124,6 +129,10 @@ class Game {
     this.updateCharacterSelection = ()=>{
       this.characterSelection.update();
     };
+    this.updateRanking= ()=>{
+      this.ranking.update()
+    }
+
     this.updateEndMenu = () => {
       this.keys.forEach((keys, id) => {
         this.lastKeys.forEach((lastkey, lastid) => {

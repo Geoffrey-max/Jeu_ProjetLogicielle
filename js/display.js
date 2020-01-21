@@ -46,7 +46,7 @@ class Display {
           this.displayGame();
           break;
         case this.game.gameStateEnum.RANKING:
-          this.displayRanking();
+          this.game.ranking.updateDisplay();
           break;
         default:
           break;
