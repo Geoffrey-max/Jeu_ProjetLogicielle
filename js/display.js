@@ -79,6 +79,7 @@ class Display {
       }
       this.cx.imageSmoothingEnabled = false;
     };
+
     this.displayMainMenu = () => {
       this.cx.drawImage(
         this.backgroundSprite,
@@ -104,6 +105,9 @@ class Display {
       this.cx.fillText(" MILITARY", 60, 90);
       this.cx.strokeText(" MILITARY", 60, 90);
     };
+
+
+    
     this.displayGame = () => {
       var player = this.game.player;
 

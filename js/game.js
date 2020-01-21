@@ -51,7 +51,23 @@ class Game {
       this.keys = keys;
 
       this.player.update(this);
-
+      // this.cx.drawImage(this.canvasSprite, 0, 0, 384, 256, 0, 0, this.canvas.width, this.canvas.height);
+      switch (this.game.gameState) {
+        case this.game.gameStateEnum.MAINMENU:
+          this.updateMainMenu();
+          break;
+        case this.game.gameStateEnum.CHARACTERSELECTION:
+          this.updateMainMenuupdateCharacterSelection();
+          break;
+        case this.game.gameStateEnum.GAME:
+          this.updateGame();
+          break;
+        case this.game.gameStateEnum.RANKING:
+          this.updateRanking();
+          break;
+        default:
+          break;
+      }
       this.lastKeys = new Map([
         ["left", keys.get("left")],
         ["up", keys.get("up")],
@@ -81,10 +97,7 @@ class Game {
                   break;
                 case this.endMenuOptionList[2]:
                   console.log("go to NewGAME");
-                  this.fight = new Fight(
-                    this.player1,
-                    this.stage
-                  );
+                  this.fight = new Fight(this.player1, this.stage);
                   this.gameState = this.gameStateEnum.FIGHT;
                   break;
                 default:
@@ -117,10 +130,7 @@ class Game {
                   break;
                 case this.endMenuOptionList[2]:
                   console.log("go to NewGAME");
-                  this.fight = new Fight(
-                    this.player1,
-                    this.stage
-                  );
+                  this.fight = new Fight(this.player1, this.stage);
                   this.gameState = this.gameStateEnum.FIGHT;
                   break;
                 default:
