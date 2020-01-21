@@ -46,7 +46,7 @@ class Display {
           this.displayGame();
           break;
         case this.game.gameStateEnum.RANKING:
-          this.game.ranking.updateDisplay();
+          this.game.ranking.updateDisplay(this);
           break;
         default:
           break;
@@ -93,7 +93,7 @@ class Display {
         0,
         0,
         (this.canvas.height * this.firtThemeSprite.width) /
-          this.firtThemeSprite.height,
+        this.firtThemeSprite.height,
         this.canvas.height
       );
       switch (this.game.cursor) {
@@ -103,7 +103,7 @@ class Display {
             321 * this.zoom,
             150 * this.zoom,
             70 * this.zoom,
-            10*this.zoom
+            10 * this.zoom
           );
           break;
         case 0:
@@ -112,7 +112,7 @@ class Display {
             321 * this.zoom,
             180 * this.zoom,
             70 * this.zoom,
-            10*this.zoom
+            10 * this.zoom
 
           );
           break;
@@ -135,7 +135,7 @@ class Display {
       this.cx.fillText(" Ranking", 325 * this.zoom, 180 * this.zoom);
       this.cx.strokeText(" Ranking", 325 * this.zoom, 180 * this.zoom);
 
-    
+
     };
 
     this.displayGame = () => {
