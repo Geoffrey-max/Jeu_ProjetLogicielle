@@ -98,7 +98,30 @@ class Display {
           this.firtThemeSprite.height,
         this.canvas.height
       );
+      switch (this.game.cursor) {
+        case 0:
+          this.cx.drawImage(
+            this.lightningCursor,
+            321 * this.zoom,
+            150 * this.zoom,
+            70 * this.zoom,
+            10*this.zoom
+          );
+          break;
+        case 0:
+          this.cx.drawImage(
+            this.lightningCursor,
+            321 * this.zoom,
+            180 * this.zoom,
+            70 * this.zoom,
+            10*this.zoom
 
+          );
+          break;
+
+        default:
+          break;
+      }
       this.cx.fillStyle = "white";
       this.cx.strokeStyle = "red";
       this.cx.font = " " + 30 * this.zoom + "pt Ancherr";
@@ -114,30 +137,7 @@ class Display {
       this.cx.fillText(" Ranking", 325 * this.zoom, 180 * this.zoom);
       this.cx.strokeText(" Ranking", 325 * this.zoom, 180 * this.zoom);
 
-      switch (this.game.cursor) {
-        case 0:
-          this.cx.drawImage(
-            this.lightningCursor,
-            321 * this.zoom,
-            153 * this.zoom,
-            70 * this.zoom,
-            10*this.zoom
-          );
-          break;
-        case 1:
-          this.cx.drawImage(
-            this.lightningCursor,
-            321 * this.zoom,
-            183 * this.zoom,
-            70 * this.zoom,
-            10*this.zoom
-
-          );
-          break;
-
-        default:
-          break;
-      }
+    
     };
 
     this.displayGame = () => {
