@@ -2,7 +2,8 @@ class MainMenu {
   constructor(game) {
     this.game = game;
 
-    this.update = () => {
+    this.update = game => {
+      this.game = game;
       var nbMenu = this.game.mainmenuOptionList.length;
       this.game.keys.forEach((key, id) => {
         this.game.lastKeys.forEach((lastkey, lastid) => {

@@ -1,16 +1,11 @@
 class Ranking {
+  constructor(game) {
+    this.game = game;
 
-    constructor(game) {
-        this.game = game;
-
-        this.update = () => {
-            console.log("rankk");
-            
-        }
-        this.updateDisplay = (display) => {
-           
-        }
-
-    }
+    this.update = game => {
+      this.game = game;
+      console.log("rankk");
+    };
+    this.updateDisplay = display => {};
+  }
 }
-

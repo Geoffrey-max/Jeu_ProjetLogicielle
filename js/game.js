@@ -23,15 +23,15 @@ class Game {
     this.endMenuOptionList = ["restart", "selectNewMap", "ranking", "main"];
 
     // Dev env--------------
-    this.characterSelection = new CharacterSelection(this);
+    // this.characterSelection = new CharacterSelection(this);
     this.endMenu = new EndMenu(this);
     this.fight = new Fight(this);
-    this.mainMenu = new MainMenu(this);
-    this.mapSelection = new MapSelection(this);
+    // this.mapSelection = new MapSelection(this);
     this.ranking = new Ranking(this);
     // ---------------------
 
-    this.gameState = this.gameStateEnum.GAME;
+    this.gameState = this.gameStateEnum.MAINMENU;
+    this.mainMenu = new MainMenu(this);
 
     this.player = new Player("red", new Vector2D(0, 0), new Vector2D(32, 32));
 
@@ -106,24 +106,24 @@ class Game {
     };
 
     this.updateMainMenu = () => {
-      this.mainMenu.update();
+      this.mainMenu.update(this);
     };
     this.updateCharacterSelection = () => {
-      this.characterSelection.update();
+      this.characterSelection.update(this);
     };
     this.updateMapSelection = () => {
-      this.mapSelection.update();
+      this.mapSelection.update(this);
     };
     this.updateGame = () => {
-      this.fight.update();
+      this.fight.update(this);
     };
 
     this.updateRanking = () => {
-      this.ranking.update();
+      this.ranking.update(this);
     };
 
     this.updateEndMenu = () => {
-      this.endMenu.update();
+      this.endMenu.update(this);
     };
   }
 }
