@@ -17,7 +17,7 @@ class MainMenu {
                     this.game
                   );
                   break;
-                case this.game.mainMenuOptionList[1]:
+                case this.game.mainmenuOptionList[1]:
                   this.game.gameState = this.game.gameStateEnum.RANKING;
                   break;
                 default:
@@ -51,7 +51,7 @@ class MainMenu {
         0,
         0,
         (display.canvas.height * display.firtThemeSprite.width) /
-          display.firtThemeSprite.height,
+        display.firtThemeSprite.height,
         display.canvas.height
       );
       switch (display.game.cursor) {
