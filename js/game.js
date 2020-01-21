@@ -52,22 +52,7 @@ class Game {
 
       this.player.update(this);
       // this.cx.drawImage(this.canvasSprite, 0, 0, 384, 256, 0, 0, this.canvas.width, this.canvas.height);
-      switch (this.game.gameState) {
-        case this.game.gameStateEnum.MAINMENU:
-          this.updateMainMenu();
-          break;
-        case this.game.gameStateEnum.CHARACTERSELECTION:
-          this.updateMainMenuupdateCharacterSelection();
-          break;
-        case this.game.gameStateEnum.GAME:
-          this.updateGame();
-          break;
-        case this.game.gameStateEnum.RANKING:
-          this.updateRanking();
-          break;
-        default:
-          break;
-      }
+      
       this.lastKeys = new Map([
         ["left", keys.get("left")],
         ["up", keys.get("up")],
@@ -75,14 +60,29 @@ class Game {
         ["down", keys.get("down")],
         ["select", keys.get("select")]
       ]);
-
+      switch (this.gameState) {
+        case this.gameStateEnum.MAINMENU:
+          this.updateMainMenu();
+          break;
+        case this.gameStateEnum.CHARACTERSELECTION:
+          this.updateMainMenuupdateCharacterSelection();
+          break;
+        case this.gameStateEnum.GAME:
+          this.updateGame();
+          break;
+        case this.gameStateEnum.RANKING:
+          this.updateRanking();
+          break;
+        default:
+          break;
+      }
       this.frame++;
     };
 
     this.updateMainMenu = () => {
       var nbMenu = this.mainmenuOptionList.length;
-      this.inputList.forEach((input, id) => {
-        this.lastInputList.forEach((lastinput, lastid) => {
+      this.keys.forEach((input, id) => {
+        this.lastKeys.forEach((lastinput, lastid) => {
           if (id === lastid) {
             if (input.a && !lastinput.a) {
               var currmenu = this.mainmenuOptionList[this.cursor];
@@ -113,8 +113,8 @@ class Game {
       });
     };
     this.updateEndMenu = () => {
-      this.inputList.forEach((input, id) => {
-        this.lastInputList.forEach((lastinput, lastid) => {
+      this.keys.forEach((input, id) => {
+        this.lastKeys.forEach((lastinput, lastid) => {
           if (id === lastid) {
             if (input.a && !lastinput.a) {
               // console.log("a : " + id);
