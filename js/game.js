@@ -20,7 +20,7 @@ class Game {
     };
     this.cursor = 0;
     this.mainmenuOptionList = ["newGame", "ranking"];
-    this.endMenuOptionList = ["restart", "selectNewMap", "ranking", "main"];
+    this.endMenuOptionList = ["restart", "ranking", "main"];
 
     // Dev env--------------
     this.characterSelection = new CharacterSelection(this);
@@ -31,7 +31,7 @@ class Game {
     this.ranking = new Ranking(this);
     // ---------------------
 
-    this.gameState = this.gameStateEnum.GAME;
+    this.gameState = this.gameStateEnum.ENDMENU;
 
     this.player = new Player("red", new Vector2D(0, 0), new Vector2D(32, 32));
 
