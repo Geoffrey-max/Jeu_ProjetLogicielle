@@ -7,13 +7,15 @@ class Game {
     this.gameStateEnum = {
       MAINMENU: "mainMenu",
       CHARACTERSELECTION: "characterSelection",
+      MAPSELECTION: "mapSelection",
       GAME: "game",
       RANKING: "ranking"
     };
     this.cursor = 0;
     this.mainmenuOptionList = ["newGame", "ranking"];
-    this.endMenuOptionList = ["restart", "selectNewMap", "ranking", "main"]
-    this.gameState = this.gameStateEnum.MAINMENU;
+    this.endMenuOptionList = ["restart", "selectNewMap", "ranking", "main"];
+    this.characterSelection = new CharacterSelection(this);
+    this.gameState = this.gameStateEnum.CHARACTERSELECTION;
 
     this.player = new Player("red", new Vector2D(0, 0), new Vector2D(32, 32));
 
@@ -66,7 +68,7 @@ class Game {
           this.updateMainMenu();
           break;
         case this.gameStateEnum.CHARACTERSELECTION:
-          this.updateMainMenuupdateCharacterSelection();
+          this.updateCharacterSelection();
           break;
         case this.gameStateEnum.GAME:
           this.updateGame();
@@ -91,10 +93,7 @@ class Game {
                 case this.mainmenuOptionList[0]:
                   console.log("go to CHARARTERSELECTION");
                   this.gameState = this.gameStateEnum.CHARACTERSELECTION;
-                  this.characterSelection = new CharacterSelection(
-                    this.characters,
-                    this.mainmenuOptionList[this.cursor]
-                  );
+                  this.characterSelection = new CharacterSelection(this);
                   break;
                 case this.mainMenuOptionList[1]:
                   this.gameState = this.gameStateEnum.RANKING;
@@ -110,6 +109,9 @@ class Game {
           }
         });
       });
+    };
+    this.updateCharacterSelection = ()=>{
+      this.characterSelection.update();
     };
     this.updateEndMenu = () => {
       this.keys.forEach((keys, id) => {

@@ -12,8 +12,6 @@ class Display {
     this.backgroundSprite.src = "img/atacama03.jpg";
     this.firtThemeSprite = document.createElement("img");
     this.firtThemeSprite.src = "img/perso.png";
-    this.cursorSprite = document.createElement("img");
-    this.cursorSprite.src = "img/cursor.png";
     this.lightningCursor = document.createElement("img");
     this.lightningCursor.src = "img/bolt1.png";
     this.game = game;
@@ -42,7 +40,7 @@ class Display {
           this.displayMainMenu();
           break;
         case this.game.gameStateEnum.CHARACTERSELECTION:
-          this.displayCharacterSelection();
+          this.game.characterSelection.updateDisplay();
           break;
         case this.game.gameStateEnum.GAME:
           this.displayGame();
