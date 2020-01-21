@@ -13,7 +13,6 @@ class Ranking {
 
         this.update = () => {
             console.log("rankk");
-
         }
         this.updateDisplay = (display) => {
             var my_gradient = display.cx.createLinearGradient(0, 0, 0, display.canvas.height * display.zoom);
