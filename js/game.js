@@ -3,7 +3,13 @@ class Game {
     this.frame = 0;
 
     this.keys = null;
-    this.lastKeys = null;
+    this.lastKeys = new Map([
+      ["left", false],
+      ["up", false],
+      ["right", false],
+      ["down", false],
+      ["select", false]
+    ]);
     this.gameStateEnum = {
       MAINMENU: "mainMenu",
       CHARACTERSELECTION: "characterSelection",
@@ -56,13 +62,6 @@ class Game {
       this.player.update(this);
       // this.cx.drawImage(this.canvasSprite, 0, 0, 384, 256, 0, 0, this.canvas.width, this.canvas.height);
 
-      this.lastKeys = new Map([
-        ["left", keys.get("left")],
-        ["up", keys.get("up")],
-        ["right", keys.get("right")],
-        ["down", keys.get("down")],
-        ["select", keys.get("select")]
-      ]);
       switch (this.gameState) {
         case this.gameStateEnum.MAINMENU:
           this.updateMainMenu();
@@ -79,15 +78,23 @@ class Game {
         default:
           break;
       }
+
+      this.lastKeys = new Map([
+        ["left", keys.get("left")],
+        ["up", keys.get("up")],
+        ["right", keys.get("right")],
+        ["down", keys.get("down")],
+        ["a", keys.get("a")]
+      ]);
       this.frame++;
     };
 
     this.updateMainMenu = () => {
       var nbMenu = this.mainmenuOptionList.length;
-      this.keys.forEach((keys, id) => {
-        this.lastKeys.forEach((lastkeys, lastid) => {
+      this.keys.forEach((key, id) => {
+        this.lastKeys.forEach((lastkey, lastid) => {
           if (id === lastid) {
-            if (keys.a && !lastkeys.a) {
+            if (id === "a" && lastid === "a" && key && !lastkey) {
               var currmenu = this.mainmenuOptionList[this.cursor];
               switch (currmenu) {
                 case this.mainmenuOptionList[0]:
@@ -102,10 +109,14 @@ class Game {
                   break;
               }
             }
-            if (keys.up && !lastkeys.up)
+            if (id === "up" && lastid === "up" && key && !lastkey) {
               this.cursor = (((this.cursor - 1) % nbMenu) + nbMenu) % nbMenu;
-            if (keys.down && !lastkeys.down)
+              console.log(this.cursor);
+            }
+            if (id === "down" && lastid === "down" && key && !lastkey) {
               this.cursor = (this.cursor + 1) % nbMenu;
+              console.log(this.cursor);
+            }
           }
         });
       });
@@ -115,9 +126,9 @@ class Game {
     };
     this.updateEndMenu = () => {
       this.keys.forEach((keys, id) => {
-        this.lastKeys.forEach((lastkeys, lastid) => {
+        this.lastKeys.forEach((lastkey, lastid) => {
           if (id === lastid) {
-            if (keys.a && !lastkeys.a) {
+            if (id === "a" && lastid === "a" && keys && !lastkey) {
               // console.log("a : " + id);
               var currmenu = this.endMenuOptionList[this.cursor];
               switch (currmenu) {
@@ -141,19 +152,13 @@ class Game {
                   break;
               }
             }
-            if (keys.up && !lastkeys.up) {
-              this.cursor =
-                (((this.cursor - 1) % this.endMenuOptionList.length) +
-                  this.endMenuOptionList.length) %
-                this.endMenuOptionList.length;
-              // console.log("up : " + this.cursor);
+            if (id === "up" && lastid === "up" && key && !lastkey) {
+              this.cursor = (((this.cursor - 1) % this.endMenuOptionList.length) + this.endMenuOptionList.length) % this.endMenuOptionList.length;
+              console.log(this.cursor);
             }
-            if (keys.down && !lastkeys.down) {
-              this.cursor =
-                (((this.cursor + 1) % this.endMenuOptionList.length) +
-                  this.endMenuOptionList.length) %
-                this.endMenuOptionList.length;
-              // console.log("down : " + this.cursor);
+            if (id === "down" && lastid === "down" && key && !lastkey) {
+              this.cursor = (this.cursor + 1) % this.endMenuOptionList.length;
+              console.log(this.cursor);
             }
           }
         });
