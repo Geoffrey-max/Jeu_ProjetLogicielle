@@ -37,16 +37,22 @@ class Display {
       // this.cx.drawImage(this.canvasSprite, 0, 0, 384, 256, 0, 0, this.canvas.width, this.canvas.height);
       switch (this.game.gameState) {
         case this.game.gameStateEnum.MAINMENU:
-          this.displayMainMenu();
+          this.game.mainMenu.updateDisplay(this);
           break;
         case this.game.gameStateEnum.CHARACTERSELECTION:
-          this.game.characterSelection.updateDisplay();
+          this.game.characterSelection.updateDisplay(this);
+          break;
+        case this.game.gameStateEnum.MAPSELECTION:
+          this.game.mapSelection.updateDisplay(this);
           break;
         case this.game.gameStateEnum.GAME:
-          this.displayGame();
+          this.game.fight.updateDisplay(this);
           break;
         case this.game.gameStateEnum.RANKING:
-          this.game.ranking.updateDisplay();
+          this.game.ranking.updateDisplay(this);
+          break;
+        case this.game.gameStateEnum.ENDMENU:
+          this.game.endMenu.updateDisplay(this);
           break;
         default:
           break;
@@ -80,101 +86,6 @@ class Display {
       this.cx.imageSmoothingEnabled = false;
     };
 
-    this.displayMainMenu = () => {
-      this.cx.drawImage(
-        this.backgroundSprite,
-        0,
-        0,
-        this.canvas.width,
-        this.canvas.height
-      );
-      this.cx.drawImage(
-        this.firtThemeSprite,
-        0,
-        0,
-        (this.canvas.height * this.firtThemeSprite.width) /
-          this.firtThemeSprite.height,
-        this.canvas.height
-      );
-      switch (this.game.cursor) {
-        case 0:
-          this.cx.drawImage(
-            this.lightningCursor,
-            321 * this.zoom,
-            150 * this.zoom,
-            70 * this.zoom,
-            10*this.zoom
-          );
-          break;
-        case 0:
-          this.cx.drawImage(
-            this.lightningCursor,
-            321 * this.zoom,
-            180 * this.zoom,
-            70 * this.zoom,
-            10*this.zoom
-
-          );
-          break;
-
-        default:
-          break;
-      }
-      this.cx.fillStyle = "white";
-      this.cx.strokeStyle = "red";
-      this.cx.font = " " + 30 * this.zoom + "pt Ancherr";
-
-      this.cx.fillText(" APOCALYPSE", 270 * this.zoom, 60 * this.zoom);
-      this.cx.strokeText(" APOCALYPSE", 270 * this.zoom, 60 * this.zoom);
-      this.cx.fillText(" MILITARY", 290 * this.zoom, 90 * this.zoom);
-      this.cx.strokeText(" MILITARY", 290 * this.zoom, 90 * this.zoom);
-
-      this.cx.font = " " + 15 * this.zoom + "pt Ancherr";
-      this.cx.fillText(" New Game", 320 * this.zoom, 150 * this.zoom);
-      this.cx.strokeText(" New Game", 320 * this.zoom, 150 * this.zoom);
-      this.cx.fillText(" Ranking", 325 * this.zoom, 180 * this.zoom);
-      this.cx.strokeText(" Ranking", 325 * this.zoom, 180 * this.zoom);
-
-    
-    };
-
-    this.displayGame = () => {
-      var player = this.game.player;
-
-      this.cx.drawImage(
-        this.playerSprite,
-        0,
-        0,
-        432,
-        400,
-        player.pos.x * this.zoom,
-        player.pos.y * this.zoom,
-        player.size.x * this.zoom,
-        player.size.y * this.zoom
-      );
-
-      this.game.obstacles.forEach(obstacle => {
-        this.cx.drawImage(
-          this.obstacleSprite,
-          0,
-          0,
-          432,
-          400,
-          obstacle.obstacle.pos.x * this.zoom,
-          obstacle.obstacle.pos.y * this.zoom,
-          obstacle.obstacle.size.x * this.zoom,
-          obstacle.obstacle.size.y * this.zoom
-        );
-      });
-
-      this.cx.fillStyle = "blue";
-      this.cx.font = " " + 12 * this.zoom + " consolas";
-      this.cx.fillText(
-        "X : " + this.game.player.pos.x + " Y: " + this.game.player.pos.y + "",
-        10 * this.zoom,
-        10 * this.zoom
-      );
-    };
     this.resize();
     window.addEventListener("resize", this.resize);
     document.body.appendChild(this.canvas);

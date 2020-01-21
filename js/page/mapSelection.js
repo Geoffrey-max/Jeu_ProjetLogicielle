@@ -1,4 +1,4 @@
-class Ranking {
+class MapSelection {
 
     constructor(game) {
         this.game = game;

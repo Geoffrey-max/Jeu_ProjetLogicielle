@@ -7,7 +7,7 @@ class Ranking {
             console.log("rankk");
             
         }
-        this.updateDisplay = (display) => {
+        this.updateDisplay = () => {
            
         }
 

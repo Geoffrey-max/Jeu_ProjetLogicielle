@@ -10,8 +10,8 @@ class CharacterSelection {
         this.update = () => {
             this.getCase();
         }
-        this.updateDisplay = () => {
-            this.getCase();
+        this.updateDisplay = (display) => {
+            
         }
 
         this.getCase = ()=>{
