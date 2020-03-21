@@ -39,14 +39,14 @@ class Game {
       {
         obstacle: new Obstacle(
           new Image(432, 400),
-          new Vector2D(128, 64),
+          new Vector2D(65, 78),
           new Vector2D(0, 100)
         )
       },
       {
         obstacle: new Obstacle(
           new Image(432, 400),
-          new Vector2D(128, 64),
+          new Vector2D(65, 78),
           new Vector2D(300, 100)
         )
       },

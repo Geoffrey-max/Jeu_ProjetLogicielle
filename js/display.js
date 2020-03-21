@@ -2,18 +2,26 @@ class Display {
   constructor(game) {
     this.frame = 0;
     this.zoom = 1;
-    this.playerSprite = document.createElement("img");
-    this.playerSprite.src = "img/Sprite2.jpg";
     this.canvasSprite = document.createElement("img");
     this.canvasSprite.src = "img/tile.png";
     this.obstacleSprite = document.createElement("img");
-    this.obstacleSprite.src = "img/Sprite2.jpg";
+    this.obstacleSprite.src = "img/game/maisonCasse.png";
     this.backgroundSprite = document.createElement("img");
     this.backgroundSprite.src = "img/atacama03.jpg";
     this.firtThemeSprite = document.createElement("img");
     this.firtThemeSprite.src = "img/perso.png";
     this.lightningCursor = document.createElement("img");
     this.lightningCursor.src = "img/bolt1.png";
+
+    this.playerSprite = document.createElement('img');
+    this.playerSprite.src = '../../img/game/jotaro.png';
+    this.monsterSprite = document.createElement('img');
+    this.monsterSprite.src = '../../img/game/zombie.gif';
+    this.plateauSprite = document.createElement('img');
+    this.plateauSprite.src = '../../img/game/plateau.png';
+
+
+
     this.game = game;
 
     this.canvas = document.createElement("canvas");

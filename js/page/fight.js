@@ -5,7 +5,7 @@ class Fight {
     this.lastDirection = "up";
     this.bulletSettings = [];
     this.bulletSize = 8;
-    this.game.monsters = [new Monster(new Vector2D(150, 100),5)];
+    this.game.monsters = [];
 
     this.update = game => {
       this.game = game;
@@ -32,28 +32,100 @@ class Fight {
       });
     };
     this.updateDisplay = display => {
+      display.cx.drawImage(
+        display.plateauSprite,
+        88,
+        44,
+        325,
+        267,
+        0,
+        0,
+        display.canvas.width,
+        display.canvas.height
+      );
+
+      if (this.game.monsters.length === 0) {
+        this.game.monsters = [
+          new Monster(
+            new Vector2D(
+              Math.floor(Math.random() * Math.floor(display.canvas.width)),
+              Math.floor(Math.random() * Math.floor(display.canvas.height))
+            ),
+            5,
+            new Vector2D(16 * display.zoom, 32 * display.zoom)
+          )
+        ];
+      }
+
       this.display = display;
       var player = display.game.player;
 
-      display.cx.drawImage(
-        display.playerSprite,
-        0,
-        0,
-        432,
-        400,
-        player.pos.x * display.zoom,
-        player.pos.y * display.zoom,
-        player.size.x * display.zoom,
-        player.size.y * display.zoom
-      );
+      switch (this.lastDirection) {
+        case "up":
+          display.cx.drawImage(
+            display.playerSprite,
+            250,
+            8,
+            30,
+            40,
+            player.pos.x * display.zoom,
+            player.pos.y * display.zoom,
+            player.size.x * display.zoom,
+            player.size.y * display.zoom
+          );
+
+          break;
+        case "down":
+          display.cx.drawImage(
+            display.playerSprite,
+            7,
+            8,
+            30,
+            40,
+            player.pos.x * display.zoom,
+            player.pos.y * display.zoom,
+            player.size.x * display.zoom,
+            player.size.y * display.zoom
+          );
+          break;
+        case "left":
+          display.cx.drawImage(
+            display.playerSprite,
+            130,
+            8,
+            30,
+            40,
+            player.pos.x * display.zoom,
+            player.pos.y * display.zoom,
+            player.size.x * display.zoom,
+            player.size.y * display.zoom
+          );
+          break;
+        case "right":
+          display.cx.drawImage(
+            display.playerSprite,
+            372,
+            8,
+            30,
+            40,
+            player.pos.x * display.zoom,
+            player.pos.y * display.zoom,
+            player.size.x * display.zoom,
+            player.size.y * display.zoom
+          );
+          break;
+
+        default:
+          break;
+      }
 
       display.game.obstacles.forEach(obstacle => {
         display.cx.drawImage(
           display.obstacleSprite,
-          0,
-          0,
-          432,
-          400,
+          70,
+          25,
+          35,
+          103,
           obstacle.obstacle.pos.x * display.zoom,
           obstacle.obstacle.pos.y * display.zoom,
           obstacle.obstacle.size.x * display.zoom,
@@ -62,7 +134,7 @@ class Fight {
       });
 
       display.cx.fillStyle = "blue";
-      display.cx.font = " " + 12 * display.zoom + " consolas";
+      display.cx.font = 4 * display.zoom + "px arial";
       display.cx.fillText(
         "X : " +
           display.game.player.pos.x +
@@ -73,16 +145,21 @@ class Fight {
         10 * display.zoom
       );
 
+      display.cx.font = " " + 8 * display.zoom + "px consolas";
       this.bulletSettings.forEach((bullet, index) => {
         display.cx.drawImage(
-          display.playerSprite,
+          display.lightningCursor,
           bullet.x,
           bullet.y,
           this.bulletSize * display.zoom,
           this.bulletSize * display.zoom
         );
 
-          var idMonstreTch = bulletAtMonster(bullet,this.bulletSize, this.game.monsters)
+        var idMonstreTch = bulletAtMonster(
+          bullet,
+          this.bulletSize,
+          this.game.monsters
+        );
 
         if (
           bullet.x > display.canvas.width ||
@@ -91,19 +168,34 @@ class Fight {
           bullet.y < 0
         ) {
           this.bulletSettings.splice(index, 1);
-        } else if (idMonstreTch.length >0) {
+        } else if (idMonstreTch.length > 0) {
           this.bulletSettings.splice(index, 1);
 
-          // enleve des pv plus supprime le monstre si mort 
-          idMonstreTch.forEach(id=>{
-            this.game.monsters[id].life--
-            if (this.game.monsters[id].life == 0) {
-              this.game.monsters.splice(id,1)
-              // TODO a delete c'est pour teste
-              this.game.monsters = [new Monster(new Vector2D( Math.floor(Math.random() * Math.floor(display.canvas.width)), Math.floor(Math.random() * Math.floor(display.canvas.height))),5)];
+          // enleve des pv plus supprime le monstre si mort
+          idMonstreTch.forEach(id => {
+            this.game.monsters[id].life--;
+            if (
+              this.game.monsters[id].life == 0 ||
+              this.game.monsters.length == 0
+            ) {
+              this.game.monsters.splice(id, 1);
+              // TODO a delete c'est pour test
+              this.game.monsters = [
+                new Monster(
+                  new Vector2D(
+                    Math.floor(
+                      Math.random() * Math.floor(display.canvas.width)
+                    ),
+                    Math.floor(
+                      Math.random() * Math.floor(display.canvas.height)
+                    )
+                  ),
+                  5,
+                  new Vector2D(16 * display.zoom, 32 * display.zoom)
+                )
+              ];
             }
-          })
-          
+          });
         } else {
           switch (bullet.direction) {
             case "up":
@@ -129,11 +221,11 @@ class Fight {
       });
       this.game.monsters.forEach(monster => {
         display.cx.drawImage(
-          display.playerSprite,
+          display.monsterSprite,
           monster.pos.x,
           monster.pos.y,
-          monster.size.x * display.zoom,
-          monster.size.y * display.zoom
+          monster.size.x,
+          monster.size.y
         );
       });
     };
