@@ -47,6 +47,7 @@ class Display {
           break;
         case this.game.gameStateEnum.GAME:
           this.game.fight.updateDisplay(this);
+          this.game.fight.updateGUIDisplay(this);
           break;
         case this.game.gameStateEnum.RANKING:
           this.game.ranking.updateDisplay(this);

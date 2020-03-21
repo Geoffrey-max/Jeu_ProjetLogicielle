@@ -31,3 +31,14 @@ var obstacleAt = (pos, size, obstacles) => {
   });
   return result;
 }
+
+var bulletAtMonster = (bulletpos, bulletsize, monsters) => {
+  var result = [];
+  // retourn les index des monstres touché
+  monsters.forEach((monster,index) => {
+    if (rectAt(bulletpos, new Vector2D(bulletsize,bulletsize), monster.pos, monster.size)) {
+      result.push(index);
+    };
+  });
+  return result;
+}

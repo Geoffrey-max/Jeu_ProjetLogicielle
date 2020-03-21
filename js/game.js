@@ -33,7 +33,7 @@ class Game {
     this.gameState = this.gameStateEnum.MAINMENU;
     this.mainMenu = new MainMenu(this);
 
-    this.player = new Player("red", new Vector2D(0, 0), new Vector2D(32, 32));
+    this.player = new Player("red", new Vector2D(0, 0), new Vector2D(20, 20));
 
     this.obstacles = [
       {

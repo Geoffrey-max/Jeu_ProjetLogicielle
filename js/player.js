@@ -6,7 +6,11 @@ class Player {
         this.size = size;
         this.speed = new Vector2D(0, 0);
         this.jumpSpeed = 5;
-        this.walkSpeed = 10;
+        this.walkSpeed = 5;
+        this.attackspeed = 0; 
+        this.fixattackspeed = 10;
+        this.ammos= 20;
+        this.fixammos= 20;
 
 
         this.moveX = game => {
@@ -51,12 +55,22 @@ class Player {
             }
 
         }
+        this.updateGun = game =>{
+            if(this.attackspeed>0){
+                this.attackspeed--
+            }
+            if (this.ammos == 0) {
+                this.attackspeed=60;
+                this.ammos = this.fixammos;
+            }
+        }
 
         this.update = game => {
 
             this.moveX(game);
             this.moveY(game);
-
+            this.updateGun(game);
+            
             if (this.pos.y > 270) this.pos.y = 0;
         }
     }
