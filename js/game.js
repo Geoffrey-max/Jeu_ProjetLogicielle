@@ -35,6 +35,8 @@ class Game {
 
     this.player = new Player("red", new Vector2D(0, 0), new Vector2D(20, 20));
 
+    this.monsters = [];
+
     this.gravity = new Vector2D(0, 0);
 
     this.obstacles = [

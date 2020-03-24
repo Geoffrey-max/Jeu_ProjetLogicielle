@@ -5,7 +5,6 @@ class Fight {
     this.lastDirection = "up";
     this.bulletSettings = [];
     this.bulletSize = 8;
-    this.game.monsters = [];
 
     this.update = game => {
       this.game = game;
@@ -30,17 +29,17 @@ class Fight {
           }
         });
       });
-      
+
 
       if (this.game.monsters.length === 0) {
         this.game.monsters = [
           new Monster(
             new Vector2D(
-              Math.floor(Math.random() * Math.floor(this.display.canvas.width)),
-              Math.floor(Math.random() * Math.floor(this.display.canvas.height))
+              Math.floor(Math.random() * Math.floor(480 - 16)),
+              Math.floor(Math.random() * Math.floor(270 - 32))
             ),
             5,
-            new Vector2D(16 * this.display.zoom, 32 * this.display.zoom)
+            new Vector2D(16, 32)
           )
         ];
       }
@@ -51,7 +50,7 @@ class Fight {
           this.bulletSize,
           this.game.monsters
         );
-  
+
         if (
           bullet.x > this.display.canvas.width ||
           bullet.x < 0 ||
@@ -61,7 +60,7 @@ class Fight {
           this.bulletSettings.splice(index, 1);
         } else if (idMonstreTch.length > 0) {
           this.bulletSettings.splice(index, 1);
-  
+
           // enleve des pv plus supprime le monstre si mort
           idMonstreTch.forEach(id => {
             this.game.monsters[id].life--;
@@ -75,14 +74,14 @@ class Fight {
                 new Monster(
                   new Vector2D(
                     Math.floor(
-                      Math.random() * Math.floor(this.display.canvas.width)
+                      Math.random() * Math.floor(480 - 16)
                     ),
                     Math.floor(
-                      Math.random() * Math.floor(this.display.canvas.height)
+                      Math.random() * Math.floor(270 - 32)
                     )
                   ),
                   5,
-                  new Vector2D(16 * this.display.zoom, 32 * this.display.zoom)
+                  new Vector2D(16, 32)
                 )
               ];
             }
@@ -92,26 +91,28 @@ class Fight {
             case "up":
               bullet.y -= this.bulletSize * 2;
               break;
-  
+
             case "down":
               bullet.y += this.bulletSize * 2;
               break;
-  
+
             case "right":
               bullet.x += this.bulletSize * 2;
               break;
-  
+
             case "left":
               bullet.x -= this.bulletSize * 2;
               break;
-  
+
             default:
               break;
           }
         }
-  
-      });      
 
+      });
+      this.game.monsters.forEach((monster) => {
+        monster.update(game);
+      });
     };
     this.updateDisplay = display => {
       display.cx.drawImage(
@@ -126,7 +127,7 @@ class Fight {
         display.canvas.height
       );
 
-      
+
 
       this.display = display;
       var player = display.game.player;
@@ -208,10 +209,10 @@ class Fight {
       display.cx.font = 4 * display.zoom + "px arial";
       display.cx.fillText(
         "X : " +
-          display.game.player.pos.x +
-          " Y: " +
-          display.game.player.pos.y +
-          "",
+        display.game.player.pos.x +
+        " Y: " +
+        display.game.player.pos.y +
+        "",
         10 * display.zoom,
         10 * display.zoom
       );
@@ -220,8 +221,8 @@ class Fight {
       this.bulletSettings.forEach((bullet, index) => {
         display.cx.drawImage(
           display.lightningCursor,
-          bullet.x,
-          bullet.y,
+          bullet.x * display.zoom,
+          bullet.y * display.zoom,
           this.bulletSize * display.zoom,
           this.bulletSize * display.zoom
         );
@@ -230,10 +231,10 @@ class Fight {
       this.game.monsters.forEach(monster => {
         display.cx.drawImage(
           display.monsterSprite,
-          monster.pos.x,
-          monster.pos.y,
-          monster.size.x,
-          monster.size.y
+          monster.pos.x * display.zoom,
+          monster.pos.y * display.zoom,
+          monster.size.x * display.zoom,
+          monster.size.y * display.zoom
         );
       });
     };
@@ -249,13 +250,13 @@ class Fight {
       if (this.game.player.attackspeed == 0) {
         this.bulletSettings.push({
           x:
-            this.game.player.pos.x * this.display.zoom +
-            ((this.game.player.size.x / 2) * this.display.zoom -
-              (this.bulletSize / 2) * this.display.zoom),
+            this.game.player.pos.x +
+            ((this.game.player.size.x / 2) -
+              (this.bulletSize / 2)),
           y:
-            this.game.player.pos.y * this.display.zoom +
-            ((this.game.player.size.x / 2) * this.display.zoom -
-              (this.bulletSize / 2) * this.display.zoom),
+            this.game.player.pos.y +
+            ((this.game.player.size.x / 2) -
+              (this.bulletSize / 2)),
           direction: this.lastDirection
         });
         this.game.player.ammos--;
