@@ -14,13 +14,13 @@ class Display {
     this.lightningCursor.src = "img/bolt1.png";
 
     this.playerSprite = document.createElement('img');
-    this.playerSprite.src = '../../img/game/jotaro.png';
+    this.playerSprite.src = 'img/game/jotaro.png';
     this.playerSpritePP = document.createElement('img');
-    this.playerSpritePP.src = '../../img/game/jotaroPP.png';
+    this.playerSpritePP.src = 'img/game/jotaroPP.png';
     this.monsterSprite = document.createElement('img');
-    this.monsterSprite.src = '../../img/game/zombie.gif';
+    this.monsterSprite.src = 'img/game/zombie.gif';
     this.plateauSprite = document.createElement('img');
-    this.plateauSprite.src = '../../img/game/plateau.png';
+    this.plateauSprite.src = 'img/game/plateau.png';
 
 
 

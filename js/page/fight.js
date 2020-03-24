@@ -30,6 +30,8 @@ class Fight {
           }
         });
       });
+      
+
     };
     this.updateDisplay = display => {
       display.cx.drawImage(
