@@ -15,6 +15,8 @@ class Display {
 
     this.playerSprite = document.createElement('img');
     this.playerSprite.src = '../../img/game/jotaro.png';
+    this.playerSpritePP = document.createElement('img');
+    this.playerSpritePP.src = '../../img/game/jotaroPP.png';
     this.monsterSprite = document.createElement('img');
     this.monsterSprite.src = '../../img/game/zombie.gif';
     this.plateauSprite = document.createElement('img');

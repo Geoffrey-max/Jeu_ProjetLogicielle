@@ -6,12 +6,7 @@ class MapSelection {
       };
       this.game = game;
       this.mapList = [
-        { name: "player1" },
-        { name: "player1" },
-        { name: "player1" },
-        { name: "player1" },
-        { name: "player1" },
-        { name: "player1" },
+        { name: "2Ddungeons" },
         { name: "player1" },
         { name: "player1" },
         { name: "player1" }
@@ -54,7 +49,8 @@ class MapSelection {
               ((180 - 10 * this.nbrow) / this.nbrow +10) * display.zoom
             );
             
-            display.cx.fillRect(
+            display.cx.drawImage(
+              display.plateauSprite,
               ((index % this.mapPerList) *((320 - 10 * this.mapPerList) / this.mapPerList + 10) +80) * display.zoom,
               (Math.floor(index / this.mapPerList) *((180 - 10 * this.nbrow) / this.nbrow + 10) +75) *display.zoom,
               ((320 - 10 * this.mapPerList) / this.mapPerList +10) * display.zoom,
@@ -62,7 +58,8 @@ class MapSelection {
             );
   
           }else{
-            display.cx.fillRect(
+            display.cx.drawImage(
+              display.plateauSprite,
               ((index % this.mapPerList) *
                 ((320 - 10 * this.mapPerList) / this.mapPerList + 10) +
                 85) *

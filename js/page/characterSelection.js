@@ -9,12 +9,6 @@ class CharacterSelection {
       { name: "player1" },
       { name: "player1" },
       { name: "player1" },
-      { name: "player1" },
-      { name: "player1" },
-      { name: "player1" },
-      { name: "player1" },
-      { name: "player1" },
-      { name: "player1" },
       { name: "player1" }
     ];
     this.charaPerLigne = 5;
@@ -54,7 +48,8 @@ class CharacterSelection {
             ((180 - 10 * this.nbrow) / this.nbrow +10) * display.zoom
           );
           
-          display.cx.fillRect(
+          display.cx.drawImage(
+            display.playerSpritePP,
             ((index % this.charaPerLigne) *((320 - 10 * this.charaPerLigne) / this.charaPerLigne + 10) +80) * display.zoom,
             (Math.floor(index / this.charaPerLigne) *((180 - 10 * this.nbrow) / this.nbrow + 10) +75) *display.zoom,
             ((320 - 10 * this.charaPerLigne) / this.charaPerLigne +10) * display.zoom,
@@ -62,7 +57,8 @@ class CharacterSelection {
           );
 
         }else{
-          display.cx.fillRect(
+          display.cx.drawImage(
+            display.playerSpritePP,
             ((index % this.charaPerLigne) *
               ((320 - 10 * this.charaPerLigne) / this.charaPerLigne + 10) +
               85) *
