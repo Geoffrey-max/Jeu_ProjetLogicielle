@@ -35,36 +35,57 @@ class Game {
 
     this.player = new Player("red", new Vector2D(0, 0), new Vector2D(20, 20));
 
+    this.gravity = new Vector2D(0, 0);
+
     this.obstacles = [
-      {
-        obstacle: new Obstacle(
-          new Image(432, 400),
-          new Vector2D(65, 78),
-          new Vector2D(0, 100)
-        )
-      },
-      {
-        obstacle: new Obstacle(
-          new Image(432, 400),
-          new Vector2D(65, 78),
-          new Vector2D(300, 100)
-        )
-      },
-      {
-        obstacle: new Obstacle(null, new Vector2D(480, 0), new Vector2D(0, 0))
-      },
-      {
-        obstacle: new Obstacle(null, new Vector2D(480, 0), new Vector2D(0, 270))
-      },
-      {
-        obstacle: new Obstacle(null, new Vector2D(0, 270), new Vector2D(480, 0))
-      },
-      {
-        obstacle: new Obstacle(null, new Vector2D(0, 270), new Vector2D(0, 0))
-      }
+      new Obstacle(new Vector2D(480, 0), new Vector2D(0, 0)),
+      new Obstacle(new Vector2D(480, 0), new Vector2D(0, 270)),
+      new Obstacle(new Vector2D(0, 270), new Vector2D(480, 0)),
+      new Obstacle(new Vector2D(0, 270), new Vector2D(0, 0))
     ];
 
-    this.gravity = new Vector2D(0, 0);
+    let request = obj => {
+      return new Promise((resolve, reject) => {
+        let xhr = new XMLHttpRequest();
+        xhr.open(obj.method || "GET", obj.url);
+        if (obj.headers) {
+          Object.keys(obj.headers).forEach(key => {
+            xhr.setRequestHeader(key, obj.headers[key]);
+          });
+        }
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(xhr.response);
+          } else {
+            reject(xhr.statusText);
+          }
+        };
+        xhr.onerror = () => reject(xhr.statusText);
+        xhr.send(obj.body);
+      });
+    };
+
+    // {
+    //   obstacle: new Obstacle(new Vector2D(65, 78), new Vector2D(0, 100))
+    // },
+    // {
+    //   obstacle: new Obstacle(new Vector2D(65, 78), new Vector2D(300, 100))
+    // },
+
+    request({ url: "https://apocalypse-military.herokuapp.com/obstacles" })
+      .then(data => {
+        let obstacle = JSON.parse(data);
+        obstacle.forEach(element => {
+          var newobstacle = new Obstacle(
+            new Vector2D(element.width, element.height),
+            new Vector2D(element.positionx, element.positiony)
+          );
+          this.obstacles.push(newobstacle);
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
 
     this.update = keys => {
       this.keys = keys;

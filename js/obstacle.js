@@ -1,6 +1,5 @@
 class Obstacle {
-    constructor(img, size, pos) {
-        this.image = img;
+    constructor( size, pos) {
         this.size = size;
         this.pos = pos;
         this.type = null;

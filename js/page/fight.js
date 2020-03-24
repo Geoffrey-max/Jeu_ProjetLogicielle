@@ -32,6 +32,86 @@ class Fight {
       });
       
 
+      if (this.game.monsters.length === 0) {
+        this.game.monsters = [
+          new Monster(
+            new Vector2D(
+              Math.floor(Math.random() * Math.floor(this.display.canvas.width)),
+              Math.floor(Math.random() * Math.floor(this.display.canvas.height))
+            ),
+            5,
+            new Vector2D(16 * this.display.zoom, 32 * this.display.zoom)
+          )
+        ];
+      }
+
+      this.bulletSettings.forEach((bullet, index) => {
+        var idMonstreTch = bulletAtMonster(
+          bullet,
+          this.bulletSize,
+          this.game.monsters
+        );
+  
+        if (
+          bullet.x > this.display.canvas.width ||
+          bullet.x < 0 ||
+          bullet.y > this.display.canvas.height ||
+          bullet.y < 0
+        ) {
+          this.bulletSettings.splice(index, 1);
+        } else if (idMonstreTch.length > 0) {
+          this.bulletSettings.splice(index, 1);
+  
+          // enleve des pv plus supprime le monstre si mort
+          idMonstreTch.forEach(id => {
+            this.game.monsters[id].life--;
+            if (
+              this.game.monsters[id].life == 0 ||
+              this.game.monsters.length == 0
+            ) {
+              this.game.monsters.splice(id, 1);
+              // TODO a delete c'est pour test
+              this.game.monsters = [
+                new Monster(
+                  new Vector2D(
+                    Math.floor(
+                      Math.random() * Math.floor(this.display.canvas.width)
+                    ),
+                    Math.floor(
+                      Math.random() * Math.floor(this.display.canvas.height)
+                    )
+                  ),
+                  5,
+                  new Vector2D(16 * this.display.zoom, 32 * this.display.zoom)
+                )
+              ];
+            }
+          });
+        } else {
+          switch (bullet.direction) {
+            case "up":
+              bullet.y -= this.bulletSize * 2;
+              break;
+  
+            case "down":
+              bullet.y += this.bulletSize * 2;
+              break;
+  
+            case "right":
+              bullet.x += this.bulletSize * 2;
+              break;
+  
+            case "left":
+              bullet.x -= this.bulletSize * 2;
+              break;
+  
+            default:
+              break;
+          }
+        }
+  
+      });      
+
     };
     this.updateDisplay = display => {
       display.cx.drawImage(
@@ -46,18 +126,7 @@ class Fight {
         display.canvas.height
       );
 
-      if (this.game.monsters.length === 0) {
-        this.game.monsters = [
-          new Monster(
-            new Vector2D(
-              Math.floor(Math.random() * Math.floor(display.canvas.width)),
-              Math.floor(Math.random() * Math.floor(display.canvas.height))
-            ),
-            5,
-            new Vector2D(16 * display.zoom, 32 * display.zoom)
-          )
-        ];
-      }
+      
 
       this.display = display;
       var player = display.game.player;
@@ -128,10 +197,10 @@ class Fight {
           25,
           35,
           103,
-          obstacle.obstacle.pos.x * display.zoom,
-          obstacle.obstacle.pos.y * display.zoom,
-          obstacle.obstacle.size.x * display.zoom,
-          obstacle.obstacle.size.y * display.zoom
+          obstacle.pos.x * display.zoom,
+          obstacle.pos.y * display.zoom,
+          obstacle.size.x * display.zoom,
+          obstacle.size.y * display.zoom
         );
       });
 
@@ -157,69 +226,6 @@ class Fight {
           this.bulletSize * display.zoom
         );
 
-        var idMonstreTch = bulletAtMonster(
-          bullet,
-          this.bulletSize,
-          this.game.monsters
-        );
-
-        if (
-          bullet.x > display.canvas.width ||
-          bullet.x < 0 ||
-          bullet.y > display.canvas.height ||
-          bullet.y < 0
-        ) {
-          this.bulletSettings.splice(index, 1);
-        } else if (idMonstreTch.length > 0) {
-          this.bulletSettings.splice(index, 1);
-
-          // enleve des pv plus supprime le monstre si mort
-          idMonstreTch.forEach(id => {
-            this.game.monsters[id].life--;
-            if (
-              this.game.monsters[id].life == 0 ||
-              this.game.monsters.length == 0
-            ) {
-              this.game.monsters.splice(id, 1);
-              // TODO a delete c'est pour test
-              this.game.monsters = [
-                new Monster(
-                  new Vector2D(
-                    Math.floor(
-                      Math.random() * Math.floor(display.canvas.width)
-                    ),
-                    Math.floor(
-                      Math.random() * Math.floor(display.canvas.height)
-                    )
-                  ),
-                  5,
-                  new Vector2D(16 * display.zoom, 32 * display.zoom)
-                )
-              ];
-            }
-          });
-        } else {
-          switch (bullet.direction) {
-            case "up":
-              bullet.y -= this.bulletSize * 2;
-              break;
-
-            case "down":
-              bullet.y += this.bulletSize * 2;
-              break;
-
-            case "right":
-              bullet.x += this.bulletSize * 2;
-              break;
-
-            case "left":
-              bullet.x -= this.bulletSize * 2;
-              break;
-
-            default:
-              break;
-          }
-        }
       });
       this.game.monsters.forEach(monster => {
         display.cx.drawImage(
