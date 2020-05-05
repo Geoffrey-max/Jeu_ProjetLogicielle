@@ -8,6 +8,8 @@ class Fight {
 
     this.update = game => {
       this.game = game;
+
+      this.game.player.update(this.game);
       this.game.keys.forEach((key, id) => {
         this.game.lastKeys.forEach((lastkey, lastid) => {
           if (id === lastid) {
@@ -29,7 +31,6 @@ class Fight {
           }
         });
       });
-
 
       if (this.game.monsters.length === 0) {
         this.game.monsters = [
@@ -131,15 +132,47 @@ class Fight {
 
       this.display = display;
       var player = display.game.player;
+      var settingImg = {
+        down: { sx: 0, sy: 0, sw: 0, sh: 0 },
+        up: { sx: 0, sy: 0, sw: 0, sh: 0 },
+        left: { sx: 0, sy: 0, sw: 0, sh: 0 },
+        right: { sx: 0, sy: 0, sw: 0, sh: 0 }
+      }
+      switch (player.name) {
+        case "Jotaro":
+          settingImg = {
+            down: { sx: 7, sy: 8, sw: 30, sh: 40 },
+            up: { sx: 250, sy: 8, sw: 30, sh: 40 },
+            left: { sx: 130, sy: 8, sw: 30, sh: 40 },
+            right: { sx: 372, sy: 8, sw: 30, sh: 40 }
+          }
+          break
+        case "LSamurai":
+          settingImg = {
+            down: { sx: 205, sy: 4, sw: 95, sh: 165 },
+            up: { sx: 314, sy: 15, sw: 120, sh: 165 },
+            left: { sx: 1, sy: 10, sw: 100, sh: 170 },
+            right: { sx: 103, sy: 9, sw: 100, sh: 170 }
+          }
+          break
+        case "Sasuke":
+          settingImg =  {
+            down: { sx: 0, sy: 200, sw: 32, sh: 61 },
+            up: { sx: 0, sy: 70, sw: 32, sh: 60 },
+            left: { sx: 0, sy: 135, sw: 32, sh: 61 },
+            right: { sx: 0, sy: 0, sw: 32, sh: 60 }
+          }
+          break
+      }
 
       switch (this.lastDirection) {
         case "up":
           display.cx.drawImage(
-            display.playerSprite,
-            250,
-            8,
-            30,
-            40,
+            display[player.name + "Sprite"],
+            settingImg.up.sx,
+            settingImg.up.sy,
+            settingImg.up.sw,
+            settingImg.up.sh,
             player.pos.x * display.zoom,
             player.pos.y * display.zoom,
             player.size.x * display.zoom,
@@ -149,11 +182,11 @@ class Fight {
           break;
         case "down":
           display.cx.drawImage(
-            display.playerSprite,
-            7,
-            8,
-            30,
-            40,
+            display[player.name + "Sprite"],
+            settingImg.down.sx,
+            settingImg.down.sy,
+            settingImg.down.sw,
+            settingImg.down.sh,
             player.pos.x * display.zoom,
             player.pos.y * display.zoom,
             player.size.x * display.zoom,
@@ -162,11 +195,11 @@ class Fight {
           break;
         case "left":
           display.cx.drawImage(
-            display.playerSprite,
-            130,
-            8,
-            30,
-            40,
+            display[player.name + "Sprite"],
+            settingImg.left.sx,
+            settingImg.left.sy,
+            settingImg.left.sw,
+            settingImg.left.sh,
             player.pos.x * display.zoom,
             player.pos.y * display.zoom,
             player.size.x * display.zoom,
@@ -175,11 +208,11 @@ class Fight {
           break;
         case "right":
           display.cx.drawImage(
-            display.playerSprite,
-            372,
-            8,
-            30,
-            40,
+            display[player.name + "Sprite"],
+            settingImg.right.sx,
+            settingImg.right.sy,
+            settingImg.right.sw,
+            settingImg.right.sh,
             player.pos.x * display.zoom,
             player.pos.y * display.zoom,
             player.size.x * display.zoom,
@@ -226,7 +259,6 @@ class Fight {
           this.bulletSize * display.zoom,
           this.bulletSize * display.zoom
         );
-
       });
       this.game.monsters.forEach(monster => {
         display.cx.drawImage(

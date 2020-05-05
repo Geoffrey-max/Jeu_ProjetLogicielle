@@ -6,12 +6,11 @@ class CharacterSelection {
     };
     this.game = game;
     this.characterList = [
-      { name: "player1" },
-      { name: "player1" },
-      { name: "player1" },
-      { name: "player1" }
+      { name: "Jotaro",pos:new Vector2D(100, 100), size:new Vector2D(20, 25),walkSpeed:3, attackspeed:10, ammos:20},
+      { name: "LSamurai",pos:new Vector2D(100, 100), size:new Vector2D(20, 25),walkSpeed:5, attackspeed:7, ammos:10 },
+      { name: "Sasuke",pos:new Vector2D(100, 100), size:new Vector2D(20, 25),walkSpeed:4, attackspeed:15, ammos:30 }
     ];
-    this.charaPerLigne = 5;
+    this.charaPerLigne = 3;
     this.indexchoose = 0;
     this.update = game => {
       this.game = game;
@@ -39,26 +38,39 @@ class CharacterSelection {
       display.cx.fillStyle = "white";
       display.cx.strokeStyle = "red";
       display.cx.lineWidth = 6;
-      this.characterList.forEach((_, index) => {
+      this.characterList.forEach((character, index) => {
         if (index === this.indexchoose) {
           display.cx.strokeRect(
-            ((index % this.charaPerLigne) *((320 - 10 * this.charaPerLigne) / this.charaPerLigne + 10) +80) * display.zoom,
-            (Math.floor(index / this.charaPerLigne) *((180 - 10 * this.nbrow) / this.nbrow + 10) +75) *display.zoom,
-            ((320 - 10 * this.charaPerLigne) / this.charaPerLigne +10) * display.zoom,
-            ((180 - 10 * this.nbrow) / this.nbrow +10) * display.zoom
-          );
-          
-          display.cx.drawImage(
-            display.playerSpritePP,
-            ((index % this.charaPerLigne) *((320 - 10 * this.charaPerLigne) / this.charaPerLigne + 10) +80) * display.zoom,
-            (Math.floor(index / this.charaPerLigne) *((180 - 10 * this.nbrow) / this.nbrow + 10) +75) *display.zoom,
-            ((320 - 10 * this.charaPerLigne) / this.charaPerLigne +10) * display.zoom,
-            ((180 - 10 * this.nbrow) / this.nbrow +10) * display.zoom
+            ((index % this.charaPerLigne) *
+              ((320 - 10 * this.charaPerLigne) / this.charaPerLigne + 10) +
+              80) *
+              display.zoom,
+            (Math.floor(index / this.charaPerLigne) *
+              ((180 - 10 * this.nbrow) / this.nbrow + 10) +
+              75) *
+              display.zoom,
+            ((320 - 10 * this.charaPerLigne) / this.charaPerLigne + 10) *
+              display.zoom,
+            ((180 - 10 * this.nbrow) / this.nbrow + 10) * display.zoom
           );
 
-        }else{
           display.cx.drawImage(
-            display.playerSpritePP,
+            display[character.name+"SpritePP"],
+            ((index % this.charaPerLigne) *
+              ((320 - 10 * this.charaPerLigne) / this.charaPerLigne + 10) +
+              80) *
+              display.zoom,
+            (Math.floor(index / this.charaPerLigne) *
+              ((180 - 10 * this.nbrow) / this.nbrow + 10) +
+              75) *
+              display.zoom,
+            ((320 - 10 * this.charaPerLigne) / this.charaPerLigne + 10) *
+              display.zoom,
+            ((180 - 10 * this.nbrow) / this.nbrow + 10) * display.zoom
+          );
+        } else {
+          display.cx.drawImage(
+            display[character.name+"SpritePP"],
             ((index % this.charaPerLigne) *
               ((320 - 10 * this.charaPerLigne) / this.charaPerLigne + 10) +
               85) *
@@ -67,7 +79,8 @@ class CharacterSelection {
               ((180 - 10 * this.nbrow) / this.nbrow + 10) +
               80) *
               display.zoom,
-            ((320 - 10 * this.charaPerLigne) / this.charaPerLigne) * display.zoom,
+            ((320 - 10 * this.charaPerLigne) / this.charaPerLigne) *
+              display.zoom,
             ((180 - 10 * this.nbrow) / this.nbrow) * display.zoom
           );
         }
@@ -92,10 +105,11 @@ class CharacterSelection {
         this.game.lastKeys.forEach((lastkey, lastid) => {
           if (id === lastid) {
             if (id === "a" && lastid === "a" && key && !lastkey) {
-              this.game.gameState = this.game.gameStateEnum.MAPSELECTION;
-              this.game.mapSelection = new MapSelection(
-                this.game
+              this.game.player = new Player(
+              this.characterList[this.indexchoose]
               );
+              this.game.gameState = this.game.gameStateEnum.MAPSELECTION;
+              this.game.mapSelection = new MapSelection(this.game);
             }
             if (id === "up" && lastid === "up" && key && !lastkey) {
               this.pos.y =
@@ -113,9 +127,6 @@ class CharacterSelection {
               this.pos.x = (this.pos.x + 1) % this.charaPerLigne;
             }
             this.indexchoose = this.pos.x + this.pos.y * this.charaPerLigne;
-            console.log(this.pos);
-
-            console.log(this.indexchoose);
           }
         });
       });

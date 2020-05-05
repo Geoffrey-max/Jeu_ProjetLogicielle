@@ -67,13 +67,6 @@ class Game {
       });
     };
 
-    // {
-    //   obstacle: new Obstacle(new Vector2D(65, 78), new Vector2D(0, 100))
-    // },
-    // {
-    //   obstacle: new Obstacle(new Vector2D(65, 78), new Vector2D(300, 100))
-    // },
-
     request({ url: "https://apocalypse-military.herokuapp.com/obstacles" })
       .then(data => {
         let obstacle = JSON.parse(data);
@@ -91,9 +84,6 @@ class Game {
 
     this.update = keys => {
       this.keys = keys;
-
-      this.player.update(this);
-      // this.cx.drawImage(this.canvasSprite, 0, 0, 384, 256, 0, 0, this.canvas.width, this.canvas.height);
 
       switch (this.gameState) {
         case this.gameStateEnum.MAINMENU:
