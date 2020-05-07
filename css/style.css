@@ -9,7 +9,7 @@ body {
   height: 100%;
   margin: 0;
   display: flex;
-  background: #448;
+  background-image: linear-gradient(to bottom, #000000, #180206, #250408, #310406, #3d0000);
 }
 
 canvas {

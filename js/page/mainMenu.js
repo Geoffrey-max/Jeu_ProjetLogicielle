@@ -18,6 +18,7 @@ class MainMenu {
                   );
                   break;
                 case this.game.mainmenuOptionList[1]:
+                  this.game.ranking = new Ranking(game)
                   this.game.gameState = this.game.gameStateEnum.RANKING;
                   break;
                 default:
@@ -78,7 +79,7 @@ class MainMenu {
           break;
       }
       display.cx.fillStyle = "white";
-      display.cx.strokeStyle = "red";
+      display.cx.strokeStyle = display.color.red;
       display.cx.font = " " + 30 * display.zoom + "pt Ancherr";
 
       display.cx.fillText(" APOCALYPSE", 270 * display.zoom, 60 * display.zoom);

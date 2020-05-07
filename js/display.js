@@ -12,19 +12,31 @@ class Display {
     this.firtThemeSprite.src = "img/perso.png";
     this.lightningCursor = document.createElement("img");
     this.lightningCursor.src = "img/bolt1.png";
+    this.hearthVoid = document.createElement("img");
+    this.hearthVoid.src = "img/hearthvode.png";
+    this.hearthFull = document.createElement("img");
+    this.hearthFull.src = "img/hearthfull.png";
+    
+
 
     this.JotaroSprite = document.createElement('img');
     this.JotaroSprite.src = 'img/game/jotaro.png';
     this.JotaroSpritePP = document.createElement('img');
     this.JotaroSpritePP.src = 'img/game/jotaroPP.png';
+    this.JotaroSpritePPGame = document.createElement('img');
+    this.JotaroSpritePPGame.src = 'img/game/jotaroPPGame.png';
     this.LSamuraiSprite = document.createElement('img');
     this.LSamuraiSprite.src = 'img/game/LSamuraiSprite.png';
     this.LSamuraiSpritePP = document.createElement('img');
     this.LSamuraiSpritePP.src = 'img/game/LSamuraiPP.png';
+    this.LSamuraiSpritePPGame = document.createElement('img');
+    this.LSamuraiSpritePPGame.src = 'img/game/LSamuraiPPGame.png';
     this.SasukeSprite = document.createElement('img');
     this.SasukeSprite.src = 'img/game/SasukeSprite.png';
     this.SasukeSpritePP = document.createElement('img');
     this.SasukeSpritePP.src = 'img/game/SasukePP.png';
+    this.SasukeSpritePPGame = document.createElement('img');
+    this.SasukeSpritePPGame.src = 'img/game/SasukePPGame.png';
 
 
     this.monsterSprite = document.createElement('img');
@@ -32,7 +44,7 @@ class Display {
     this.plateauSprite = document.createElement('img');
     this.plateauSprite.src = 'img/game/plateau.png';
 
-
+    this.color = {red:"#AC0000"}
 
     this.game = game;
 

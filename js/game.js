@@ -21,13 +21,13 @@ class Game {
     this.cursor = 0;
     this.mainmenuOptionList = ["newGame", "ranking"];
     this.endMenuOptionList = ["restart", "ranking", "main"];
-
+    
     // Dev env--------------
     // this.characterSelection = new CharacterSelection(this);
     this.endMenu = new EndMenu(this);
     this.fight = new Fight(this);
     // this.mapSelection = new MapSelection(this);
-    this.ranking = new Ranking(this);
+    this.score = 1000
     // ---------------------
 
     this.gameState = this.gameStateEnum.MAINMENU;

@@ -9,6 +9,11 @@ class Fight {
     this.update = game => {
       this.game = game;
 
+      if (this.game.player.life <= 0) {
+        this.game.ranking = new Ranking(game)
+        this.game.gameState = "ranking"
+      }
+
       this.game.player.update(this.game);
       this.game.keys.forEach((key, id) => {
         this.game.lastKeys.forEach((lastkey, lastid) => {
@@ -111,8 +116,12 @@ class Fight {
         }
 
       });
-      this.game.monsters.forEach((monster) => {
+      this.game.monsters.forEach((monster, index) => {
         monster.update(game);
+        if (rectAt(monster.pos, monster.size, this.game.player.pos, this.game.player.size)) {
+          this.game.player.life -= 1
+          this.game.monsters.splice(index, 1);
+        }
       });
     };
     this.updateDisplay = display => {
@@ -131,98 +140,9 @@ class Fight {
 
 
       this.display = display;
+
       var player = display.game.player;
-      var settingImg = {
-        down: { sx: 0, sy: 0, sw: 0, sh: 0 },
-        up: { sx: 0, sy: 0, sw: 0, sh: 0 },
-        left: { sx: 0, sy: 0, sw: 0, sh: 0 },
-        right: { sx: 0, sy: 0, sw: 0, sh: 0 }
-      }
-      switch (player.name) {
-        case "Jotaro":
-          settingImg = {
-            down: { sx: 7, sy: 8, sw: 30, sh: 40 },
-            up: { sx: 250, sy: 8, sw: 30, sh: 40 },
-            left: { sx: 130, sy: 8, sw: 30, sh: 40 },
-            right: { sx: 372, sy: 8, sw: 30, sh: 40 }
-          }
-          break
-        case "LSamurai":
-          settingImg = {
-            down: { sx: 205, sy: 4, sw: 95, sh: 165 },
-            up: { sx: 314, sy: 15, sw: 120, sh: 165 },
-            left: { sx: 1, sy: 10, sw: 100, sh: 170 },
-            right: { sx: 103, sy: 9, sw: 100, sh: 170 }
-          }
-          break
-        case "Sasuke":
-          settingImg =  {
-            down: { sx: 0, sy: 200, sw: 32, sh: 61 },
-            up: { sx: 0, sy: 70, sw: 32, sh: 60 },
-            left: { sx: 0, sy: 135, sw: 32, sh: 61 },
-            right: { sx: 0, sy: 0, sw: 32, sh: 60 }
-          }
-          break
-      }
-
-      switch (this.lastDirection) {
-        case "up":
-          display.cx.drawImage(
-            display[player.name + "Sprite"],
-            settingImg.up.sx,
-            settingImg.up.sy,
-            settingImg.up.sw,
-            settingImg.up.sh,
-            player.pos.x * display.zoom,
-            player.pos.y * display.zoom,
-            player.size.x * display.zoom,
-            player.size.y * display.zoom
-          );
-
-          break;
-        case "down":
-          display.cx.drawImage(
-            display[player.name + "Sprite"],
-            settingImg.down.sx,
-            settingImg.down.sy,
-            settingImg.down.sw,
-            settingImg.down.sh,
-            player.pos.x * display.zoom,
-            player.pos.y * display.zoom,
-            player.size.x * display.zoom,
-            player.size.y * display.zoom
-          );
-          break;
-        case "left":
-          display.cx.drawImage(
-            display[player.name + "Sprite"],
-            settingImg.left.sx,
-            settingImg.left.sy,
-            settingImg.left.sw,
-            settingImg.left.sh,
-            player.pos.x * display.zoom,
-            player.pos.y * display.zoom,
-            player.size.x * display.zoom,
-            player.size.y * display.zoom
-          );
-          break;
-        case "right":
-          display.cx.drawImage(
-            display[player.name + "Sprite"],
-            settingImg.right.sx,
-            settingImg.right.sy,
-            settingImg.right.sw,
-            settingImg.right.sh,
-            player.pos.x * display.zoom,
-            player.pos.y * display.zoom,
-            player.size.x * display.zoom,
-            player.size.y * display.zoom
-          );
-          break;
-
-        default:
-          break;
-      }
+      player.updateDisplay(display, this.lastDirection);
 
       display.game.obstacles.forEach(obstacle => {
         display.cx.drawImage(
@@ -238,17 +158,20 @@ class Fight {
         );
       });
 
-      display.cx.fillStyle = "blue";
-      display.cx.font = 4 * display.zoom + "px arial";
-      display.cx.fillText(
-        "X : " +
-        display.game.player.pos.x +
-        " Y: " +
-        display.game.player.pos.y +
-        "",
-        10 * display.zoom,
-        10 * display.zoom
-      );
+      // HUD
+      display.cx.fillStyle = "#660000";
+      display.cx.font = 1 * display.zoom + "px arial";
+      // display.cx.fillText(
+      //   "X : " +
+      //   display.game.player.pos.x +
+      //   " Y: " +
+      //   display.game.player.pos.y +
+      //   "",
+      //   10 * display.zoom,
+      //   10 * display.zoom
+      // );
+
+
 
       display.cx.font = " " + 8 * display.zoom + "px consolas";
       this.bulletSettings.forEach((bullet, index) => {
@@ -268,14 +191,61 @@ class Fight {
           monster.size.x * display.zoom,
           monster.size.y * display.zoom
         );
+
       });
     };
     this.updateGUIDisplay = display => {
+      display.cx.font = " " + 20 * display.zoom + "pt Ancherr";
+      display.cx.strokeStyle = display.color.red;
+      display.cx.fillStyle = "white";
+      display.cx.lineWidth = 5;
+      display.cx.strokeText(
+        this.game.player.ammos + "/" + this.game.player.fixammos,
+        display.canvas.width - (50 * display.zoom),
+        display.canvas.height - (20 * display.zoom)
+      );
       display.cx.fillText(
         this.game.player.ammos + "/" + this.game.player.fixammos,
-        display.canvas.width - 50,
-        display.canvas.height - 50
+        display.canvas.width - (50 * display.zoom),
+        display.canvas.height - (20 * display.zoom)
       );
+
+      display.cx.lineWidth = 2;
+      display.cx.font = " " + 12 * display.zoom + "pt Ancherr";
+
+      display.cx.strokeRect((2* display.zoom), display.canvas.height - (56* display.zoom),(40 * display.zoom),(15 * display.zoom))
+      display.cx.strokeText(
+        "#"+this.game.score,
+        (10 * display.zoom),
+        display.canvas.height - (45 * display.zoom)
+      );
+      display.cx.fillText(
+        "#"+this.game.score,
+        (10 * display.zoom),
+        display.canvas.height - (45 * display.zoom)
+      );
+      for (let i = 0; i < this.game.player.maxLife; i++) {
+        if (i < this.game.player.life) {
+          display.cx.drawImage(
+            display.hearthFull,
+            (15 * i + 30) * display.zoom,
+            10 * display.zoom,
+            15 * display.zoom,
+            7 * display.zoom
+          );
+
+        } else {
+          display.cx.drawImage(
+            display.hearthVoid,
+            (15 * i + 30) * display.zoom,
+            10 * display.zoom,
+            15 * display.zoom,
+            7 * display.zoom
+          );
+        }
+      }
+      display.cx.lineWidth = 1;
+
     };
 
     this.throwBullet = () => {

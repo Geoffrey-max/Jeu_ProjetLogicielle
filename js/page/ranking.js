@@ -22,20 +22,20 @@ class Ranking {
             display.cx.fillRect(0, 0, display.canvas.width * display.zoom, display.canvas.height * display.zoom);
 
             display.cx.fillStyle = "white";
-            display.cx.strokeStyle = "red";
+            display.cx.strokeStyle = display.color.red;
             display.cx.font = " " + 30 * display.zoom + "pt Ancherr";
 
             display.cx.fillText(" RANKING", 185 * display.zoom, 60 * display.zoom);
             display.cx.strokeText(" RANKING", 185 * display.zoom, 60 * display.zoom);
 
             display.cx.fillStyle = "white";
-            display.cx.strokeStyle = "red";
+            display.cx.strokeStyle = display.color.red;
             display.cx.font = " " + 15 * display.zoom + "pt Ancherr";
 
             display.cx.fillText(" NEW GAME", 202.5 * display.zoom, 240 * display.zoom);
             display.cx.strokeText(" NEW GAME", 202.5 * display.zoom, 240 * display.zoom);
 
-            display.cx.fillStyle = "red";
+            display.cx.fillStyle = display.color.red;
             display.cx.fillRect(110 * display.zoom, 80 * display.zoom, 260 * display.zoom, 130 * display.zoom);
 
             display.cx.fillStyle = "black";

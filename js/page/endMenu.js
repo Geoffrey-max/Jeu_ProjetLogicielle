@@ -44,7 +44,7 @@ class EndMenu {
       display.cx.fillRect(0, 0, display.canvas.width * display.zoom, display.canvas.height * display.zoom);
 
       display.cx.fillStyle = "white";
-      display.cx.strokeStyle = "red";
+      display.cx.strokeStyle = display.color.red;
       display.cx.font = " " + 30 * display.zoom + "pt Ancherr";
 
       display.cx.fillText("END MENU", 182.5 * display.zoom, 60 * display.zoom);

@@ -38,7 +38,7 @@ class MapSelection {
         );
   
         display.cx.fillStyle = "white";
-        display.cx.strokeStyle = "red";
+        display.cx.strokeStyle = display.color.red;
         display.cx.lineWidth = 6;
         this.mapList.forEach((_, index) => {
           if (index === this.indexchoose) {
