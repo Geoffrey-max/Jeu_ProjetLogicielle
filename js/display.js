@@ -41,8 +41,15 @@ class Display {
 
     this.monsterSprite = document.createElement('img');
     this.monsterSprite.src = 'img/game/zombie.gif';
-    this.plateauSprite = document.createElement('img');
-    this.plateauSprite.src = 'img/game/plateau.png';
+
+
+    this.dungeonsplateauSprite = document.createElement('img');
+    this.dungeonsplateauSprite.src = 'img/map/dungeonsplateauSprite.png';
+    this.prairieplateauSprite = document.createElement('img');
+    this.prairieplateauSprite.src = 'img/map/prairieplateauSprite.png';
+    this.oceanplateauSprite = document.createElement('img');
+    this.oceanplateauSprite.src = 'img/map/oceanplateauSprite.png';
+    
 
     this.color = {red:"#AC0000"}
 

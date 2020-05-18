@@ -6,10 +6,9 @@ class MapSelection {
       };
       this.game = game;
       this.mapList = [
-        { name: "2Ddungeons" },
-        { name: "player1" },
-        { name: "player1" },
-        { name: "player1" }
+        { name: "dungeons", sx:88,sy:44,sw:325,sh:267},
+        { name: "prairie",sx:0,sy:0,sw:384,sh:256 },
+        { name: "ocean",sx:0,sy:0,sw:1200,sh:928 }
       ];
       this.mapPerList = 3;
       this.indexchoose = 0;
@@ -40,7 +39,7 @@ class MapSelection {
         display.cx.fillStyle = "white";
         display.cx.strokeStyle = display.color.red;
         display.cx.lineWidth = 6;
-        this.mapList.forEach((_, index) => {
+        this.mapList.forEach((map, index) => {
           if (index === this.indexchoose) {
             display.cx.strokeRect(
               ((index % this.mapPerList) *((320 - 10 * this.mapPerList) / this.mapPerList + 10) +80) * display.zoom,
@@ -50,7 +49,7 @@ class MapSelection {
             );
             
             display.cx.drawImage(
-              display.plateauSprite,
+              display[map.name + "plateauSprite"],
               ((index % this.mapPerList) *((320 - 10 * this.mapPerList) / this.mapPerList + 10) +80) * display.zoom,
               (Math.floor(index / this.mapPerList) *((180 - 10 * this.nbrow) / this.nbrow + 10) +75) *display.zoom,
               ((320 - 10 * this.mapPerList) / this.mapPerList +10) * display.zoom,
@@ -59,7 +58,7 @@ class MapSelection {
   
           }else{
             display.cx.drawImage(
-              display.plateauSprite,
+              display[map.name + "plateauSprite"],
               ((index % this.mapPerList) *
                 ((320 - 10 * this.mapPerList) / this.mapPerList + 10) +
                 85) *
@@ -93,10 +92,12 @@ class MapSelection {
           this.game.lastKeys.forEach((lastkey, lastid) => {
             if (id === lastid) {
               if (id === "a" && lastid === "a" && key && !lastkey) {
+                this.game.map = this.mapList[this.indexchoose]
                 this.game.gameState = this.game.gameStateEnum.GAME;
                 this.game.fight = new Fight(
                   this.game
                 );
+                
               }
               if (id === "up" && lastid === "up" && key && !lastkey) {
                 this.pos.y =

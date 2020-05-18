@@ -72,7 +72,8 @@ class Player {
             down: { sx: 7, sy: 8, sw: 30, sh: 40 },
             up: { sx: 250, sy: 8, sw: 30, sh: 40 },
             left: { sx: 130, sy: 8, sw: 30, sh: 40 },
-            right: { sx: 372, sy: 8, sw: 30, sh: 40 }
+            right: { sx: 372, sy: 8, sw: 30, sh: 40 },
+            touch: { sx: 7, sy: 104, sw: 30, sh: 40 }
           }
           break
         case "LSamurai":
@@ -80,7 +81,8 @@ class Player {
             down: { sx: 205, sy: 4, sw: 95, sh: 165 },
             up: { sx: 314, sy: 15, sw: 120, sh: 165 },
             left: { sx: 1, sy: 10, sw: 100, sh: 170 },
-            right: { sx: 103, sy: 9, sw: 100, sh: 170 }
+            right: { sx: 103, sy: 9, sw: 100, sh: 170 },
+            touch: { sx: 440, sy: 10, sw: 100, sh: 170 }
           }
           break
         case "Sasuke":
@@ -88,69 +90,85 @@ class Player {
             down: { sx: 0, sy: 200, sw: 32, sh: 61 },
             up: { sx: 0, sy: 70, sw: 32, sh: 60 },
             left: { sx: 0, sy: 135, sw: 32, sh: 61 },
-            right: { sx: 0, sy: 0, sw: 32, sh: 60 }
+            right: { sx: 0, sy: 0, sw: 32, sh: 60 },
+            touch: { sx: 0, sy: 265, sw: 32, sh: 60 }
           }
           break
       }
 
-      switch (lastDirection) {
-        case "up":
-          display.cx.drawImage(
-            display[this.name + "Sprite"],
-            settingImg.up.sx,
-            settingImg.up.sy,
-            settingImg.up.sw,
-            settingImg.up.sh,
-            this.pos.x * display.zoom,
-            this.pos.y * display.zoom,
-            this.size.x * display.zoom,
-            this.size.y * display.zoom
-          );
-
-          break;
-        case "down":
-          display.cx.drawImage(
-            display[this.name + "Sprite"],
-            settingImg.down.sx,
-            settingImg.down.sy,
-            settingImg.down.sw,
-            settingImg.down.sh,
-            this.pos.x * display.zoom,
-            this.pos.y * display.zoom,
-            this.size.x * display.zoom,
-            this.size.y * display.zoom
-          );
-          break;
-        case "left":
-          display.cx.drawImage(
-            display[this.name + "Sprite"],
-            settingImg.left.sx,
-            settingImg.left.sy,
-            settingImg.left.sw,
-            settingImg.left.sh,
-            this.pos.x * display.zoom,
-            this.pos.y * display.zoom,
-            this.size.x * display.zoom,
-            this.size.y * display.zoom
-          );
-          break;
-        case "right":
-          display.cx.drawImage(
-            display[this.name + "Sprite"],
-            settingImg.right.sx,
-            settingImg.right.sy,
-            settingImg.right.sw,
-            settingImg.right.sh,
-            this.pos.x * display.zoom,
-            this.pos.y * display.zoom,
-            this.size.x * display.zoom,
-            this.size.y * display.zoom
-          );
-          break;
-
-        default:
-          break;
+      if (this.stat == 'touch') {
+        display.cx.drawImage(
+          display[this.name + "Sprite"],
+          settingImg.touch.sx,
+          settingImg.touch.sy,
+          settingImg.touch.sw,
+          settingImg.touch.sh,
+          this.pos.x * display.zoom,
+          this.pos.y * display.zoom,
+          this.size.x * display.zoom,
+          this.size.y * display.zoom
+        );
+      }else{
+        switch (lastDirection) {
+          case "up":
+            display.cx.drawImage(
+              display[this.name + "Sprite"],
+              settingImg.up.sx,
+              settingImg.up.sy,
+              settingImg.up.sw,
+              settingImg.up.sh,
+              this.pos.x * display.zoom,
+              this.pos.y * display.zoom,
+              this.size.x * display.zoom,
+              this.size.y * display.zoom
+            );
+  
+            break;
+          case "down":
+            display.cx.drawImage(
+              display[this.name + "Sprite"],
+              settingImg.down.sx,
+              settingImg.down.sy,
+              settingImg.down.sw,
+              settingImg.down.sh,
+              this.pos.x * display.zoom,
+              this.pos.y * display.zoom,
+              this.size.x * display.zoom,
+              this.size.y * display.zoom
+            );
+            break;
+          case "left":
+            display.cx.drawImage(
+              display[this.name + "Sprite"],
+              settingImg.left.sx,
+              settingImg.left.sy,
+              settingImg.left.sw,
+              settingImg.left.sh,
+              this.pos.x * display.zoom,
+              this.pos.y * display.zoom,
+              this.size.x * display.zoom,
+              this.size.y * display.zoom
+            );
+            break;
+          case "right":
+            display.cx.drawImage(
+              display[this.name + "Sprite"],
+              settingImg.right.sx,
+              settingImg.right.sy,
+              settingImg.right.sw,
+              settingImg.right.sh,
+              this.pos.x * display.zoom,
+              this.pos.y * display.zoom,
+              this.size.x * display.zoom,
+              this.size.y * display.zoom
+            );
+            break;
+  
+          default:
+            break;
+        }
       }
+      
       display.cx.drawImage(
         display[this.name + "SpritePPGame"],
         1 * display.zoom,
@@ -163,12 +181,20 @@ class Player {
     this.update = game => {
       if (this.stat ==="touch") {
         if(this.timer == null){
-          this.timer = 25
+          this.timer = 20
         }
+        if(this.timer > 0){
+          this.timer -=1
+        }
+        if(this.timer == 0){
+          this.stat= "normal"
+          this.timer = null
+        }
+      }else{
+        this.moveX(game);
+        this.moveY(game);
+        this.updateGun(game);
       }
-      this.moveX(game);
-      this.moveY(game);
-      this.updateGun(game);
 
       if (this.pos.y > 270) this.pos.y = 0;
     };

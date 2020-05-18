@@ -37,6 +37,7 @@ class Game {
 
     this.monsters = [];
 
+    this.map = {}
     this.gravity = new Vector2D(0, 0);
 
     this.obstacles = [

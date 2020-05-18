@@ -120,17 +120,18 @@ class Fight {
         monster.update(game);
         if (rectAt(monster.pos, monster.size, this.game.player.pos, this.game.player.size)) {
           this.game.player.life -= 1
+          this.game.player.stat = "touch"
           this.game.monsters.splice(index, 1);
         }
       });
     };
     this.updateDisplay = display => {
       display.cx.drawImage(
-        display.plateauSprite,
-        88,
-        44,
-        325,
-        267,
+        display[this.game.map.name + "plateauSprite"],
+        this.game.map.sx,
+        this.game.map.sy,
+        this.game.map.sw,
+        this.game.map.sh,
         0,
         0,
         display.canvas.width,
