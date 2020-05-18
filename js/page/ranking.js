@@ -3,14 +3,6 @@ class Ranking {
     constructor(game) {
         this.game = game;
 
-        this.top5 = new Map([
-            ["XE Sling", 5000],
-            ["ThrallHDGaming", 2500],
-            ["XE Kwoak", 1000],
-            ["SISI", 300],
-            ["Quoi", 200]
-        ]);
-
         this.update = () => {
             console.log("rankk");
         }
@@ -42,7 +34,7 @@ class Ranking {
             display.cx.fillRect(113 * display.zoom, 83 * display.zoom, 254 * display.zoom, 124 * display.zoom);
 
             let i = 0;
-            this.top5.forEach((score, name) => {
+            game.scores.forEach((score, name) => {
                 display.cx.fillStyle = "white";
                 display.cx.fillText("" + score + " .................... " + name + "", 125 * display.zoom, (110 + 20 * i) * display.zoom);
                 i++;

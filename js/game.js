@@ -21,16 +21,19 @@ class Game {
     this.cursor = 0;
     this.mainmenuOptionList = ["newGame", "ranking"];
     this.endMenuOptionList = ["restart", "ranking", "main"];
-    
+    this.rankingMenuOptionList = ["newGame"];
+
     // Dev env--------------
     // this.characterSelection = new CharacterSelection(this);
+    this.ranking = new Ranking(this);
     this.endMenu = new EndMenu(this);
     this.fight = new Fight(this);
     // this.mapSelection = new MapSelection(this);
-    this.score = 1000
+    this.score = 1000;
+    this.scores = new Map([]);
     // ---------------------
 
-    this.gameState = this.gameStateEnum.MAINMENU;
+    this.gameState = this.gameStateEnum.RANKING;
     this.mainMenu = new MainMenu(this);
 
     this.player = new Player("red", new Vector2D(0, 0), new Vector2D(20, 20));
@@ -47,7 +50,7 @@ class Game {
       new Obstacle(new Vector2D(0, 270), new Vector2D(0, 0))
     ];
 
-    let request = obj => {
+    this.request = obj => {
       return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
         xhr.open(obj.method || "GET", obj.url);
@@ -68,7 +71,7 @@ class Game {
       });
     };
 
-    request({ url: "https://apocalypse-military.herokuapp.com/obstacles" })
+    this.request({ url: "https://apocalypse-military.herokuapp.com/obstacles" })
       .then(data => {
         let obstacle = JSON.parse(data);
         obstacle.forEach(element => {
@@ -77,6 +80,17 @@ class Game {
             new Vector2D(element.positionx, element.positiony)
           );
           this.obstacles.push(newobstacle);
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    this.request({ url: "https://apocalypse-military.herokuapp.com/historiqueDESC" })
+      .then(data => {
+        let varScore = JSON.parse(data);
+        varScore.forEach(element => {
+          this.scores.set(element.score, element.id_joueurs);
         });
       })
       .catch(error => {
