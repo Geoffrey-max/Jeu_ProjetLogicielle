@@ -16,9 +16,7 @@ class Display {
     this.hearthVoid.src = "img/hearthvode.png";
     this.hearthFull = document.createElement("img");
     this.hearthFull.src = "img/hearthfull.png";
-    
-
-
+  
     this.JotaroSprite = document.createElement('img');
     this.JotaroSprite.src = 'img/game/jotaro.png';
     this.JotaroSpritePP = document.createElement('img');

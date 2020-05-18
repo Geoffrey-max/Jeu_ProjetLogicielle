@@ -2,6 +2,17 @@ class Ranking {
 
     constructor(game) {
         this.game = game;
+        this.scores = new Map([]);
+
+        game.request({ url: "https://apocalypse-military.herokuapp.com/historiqueDESC" }).then(data => {
+        let varScore = JSON.parse(data);
+        varScore.forEach(element => {
+          this.scores.set(element.score, element.id_joueurs);
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
 
         this.update = () => {
             console.log("rankk");
@@ -34,7 +45,19 @@ class Ranking {
             display.cx.fillRect(113 * display.zoom, 83 * display.zoom, 254 * display.zoom, 124 * display.zoom);
 
             let i = 0;
-            game.scores.forEach((score, name) => {
+            if (this.scores.size == 0) {
+                display.cx.strokeText(
+                    "Loading",
+                      display.canvas.width/2 -(10*display.zoom),
+                      display.canvas.height-100
+                    );
+                    display.cx.fillText(
+                      "Loading",
+                      display.canvas.width/2 - (10*display.zoom),
+                      display.canvas.height-100
+                    ); 
+            }
+            this.scores.forEach((score, name) => {
                 display.cx.fillStyle = "white";
                 display.cx.fillText("" + score + " .................... " + name + "", 125 * display.zoom, (110 + 20 * i) * display.zoom);
                 i++;

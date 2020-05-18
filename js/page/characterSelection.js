@@ -6,9 +6,9 @@ class CharacterSelection {
     };
     this.game = game;
     this.characterList = [
-      { name: "Jotaro",pos:new Vector2D(100, 100), size:new Vector2D(20, 25),walkSpeed:3, attackspeed:10, ammos:20, life:4},
-      { name: "LSamurai",pos:new Vector2D(100, 100), size:new Vector2D(20, 25),walkSpeed:5, attackspeed:7, ammos:10, life:3},
-      { name: "Sasuke",pos:new Vector2D(100, 100), size:new Vector2D(20, 25),walkSpeed:4, attackspeed:15, ammos:30, life:3}
+      { name: "Jotaro",pos:new Vector2D(70, 100), size:new Vector2D(20, 25),walkSpeed:3, attackspeed:10, ammos:20, life:4},
+      { name: "LSamurai",pos:new Vector2D(70, 100), size:new Vector2D(20, 25),walkSpeed:5, attackspeed:7, ammos:10, life:3},
+      { name: "Sasuke",pos:new Vector2D(70, 100), size:new Vector2D(20, 25),walkSpeed:4, attackspeed:15, ammos:30, life:3}
     ];
     this.charaPerLigne = 3;
     this.indexchoose = 0;

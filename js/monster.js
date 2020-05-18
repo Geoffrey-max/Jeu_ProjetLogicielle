@@ -1,7 +1,7 @@
 class Monster {
-  constructor(pos, life, size) {
+  constructor(game, life, size) {
     this.life = life;
-    this.pos = pos;
+    this.pos = getPosition(game,size);
     this.size = size ? size : new Vector2D(16, 32);
     this.speed = new Vector2D(0, 0);
     this.walkSpeed = 1;
@@ -39,9 +39,28 @@ class Monster {
       }
     };
 
+
     this.update = game => {
       this.moveX(game);
       this.moveY(game);
     };
   }
+}
+
+let getPosition = function (game,size){
+  aleapos = new Vector2D(
+    Math.floor(Math.random() * Math.floor(480 - size.x)),
+    Math.floor(Math.random() * Math.floor(270 - size.y))
+  )
+  while (obstacleAt(aleapos,size,game.obstacles).length>0) {
+    if (aleapos.x < 480) {
+      aleapos.x++
+    }else{
+      aleapos.x = 0
+      aleapos.y++
+    }
+    aleapos.y= aleapos.y == 270? 0:aleapos.y
+  }
+  return aleapos
+
 }
