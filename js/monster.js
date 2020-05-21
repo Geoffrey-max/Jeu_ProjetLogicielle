@@ -1,10 +1,10 @@
 class Monster {
-  constructor(game, life, size) {
+  constructor(game, life, size,speed) {
     this.life = life;
     this.pos = getPosition(game,size);
     this.size = size ? size : new Vector2D(16, 32);
     this.speed = new Vector2D(0, 0);
-    this.walkSpeed = 1;
+    this.walkSpeed = speed;
     this.posPlayerX = null;
     this.posPlayerY = null;
 

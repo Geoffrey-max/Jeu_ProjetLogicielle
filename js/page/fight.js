@@ -5,22 +5,23 @@ class Fight {
     this.lastDirection = "up";
     this.bulletSettings = [];
     this.bulletSize = 8;
-    
+    this.gamestats = [{ name: "begin", time: 60 },{ name: "vague", time: 60 }]
     this.vagues = []
-    this.currVague = 0 
-
+    this.currVague = 0
+    this.nbzombispawn = 0
+    this.spawnchrono = 0
     game.request({ url: "https://apocalypse-military.herokuapp.com/vagues" })
-    .then(data => {
-      let vagues = JSON.parse(data);
-      vagues.forEach(element => {
-        this.vagues.push(element);
-        this.vagueready= true
+      .then(data => {
+        let vagues = JSON.parse(data);
+        vagues.forEach(element => {
+          this.vagues.push(element);
+          this.vagueready = true
+        });
+      })
+      .catch(error => {
+        console.log(error);
       });
-    })
-    .catch(error => {
-      console.log(error);
-    });
-    game.request({ url: "https://apocalypse-military.herokuapp.com/obstaclesbymap/"+game.map.name })
+    game.request({ url: "https://apocalypse-military.herokuapp.com/obstaclesbymap/" + game.map.name })
       .then(data => {
         let obstacle = JSON.parse(data);
         obstacle.forEach(element => {
@@ -29,7 +30,7 @@ class Fight {
             new Vector2D(element.positionx, element.positiony)
           );
           game.obstacles.push(newobstacle);
-          this.obstacleready= true
+          this.obstacleready = true
         });
       })
       .catch(error => {
@@ -38,7 +39,15 @@ class Fight {
 
     this.update = game => {
       this.game = game;
-      if (this.obstacleready && this.vagueready) {
+
+      if (this.obstacleready && this.vagueready && this.gamestats[0].name != "begin") {
+
+        if (this.game.monsters.length == 0 && this.vagues[this.currVague].nbr == this.nbzombispawn) {
+          this.currVague++
+          this.nbzombispawn = 0
+          this.gamestats.push({ name: "vague", time: 60 })
+        }
+
         if (this.game.player.life <= 0) {
           this.game.ranking = new Ranking(game)
           this.game.gameState = "ranking"
@@ -67,14 +76,25 @@ class Fight {
           });
         });
 
-        if (this.game.monsters.length === 0) {
-          this.game.monsters = [
-            new Monster(
-              game,
-              5,
-              new Vector2D(16, 32)
-            )
-          ];
+        if (this.gamestats[0].name == "spawn") {
+          if (this.vagues.length >= this.currVague) {
+            if (this.vagues[this.currVague].nbr != this.nbzombispawn) {
+              if (this.spawnchrono == 0) {
+                this.game.monsters.push(new Monster(
+                  game,
+                  this.vagues[this.currVague].life,
+                  new Vector2D(16, 32),
+                  this.vagues[this.currVague].vitesse
+                )); 
+                this.nbzombispawn++
+                this.spawnchrono =  Math.floor(Math.random() * (this.vagues[this.currVague].maxi - this.vagues[this.currVague].mini) + this.vagues[this.currVague].mini);
+  
+              } else {
+                this.spawnchrono--
+              }
+            }
+
+          }
         }
 
         this.bulletSettings.forEach((bullet, index) => {
@@ -102,14 +122,6 @@ class Fight {
                 this.game.monsters.length == 0
               ) {
                 this.game.monsters.splice(id, 1);
-                // TODO a delete c'est pour test
-                this.game.monsters = [
-                  new Monster(
-                     game,
-                    5,
-                    new Vector2D(16, 32)
-                  )
-                ];
               }
             });
           } else {
@@ -145,7 +157,17 @@ class Fight {
           }
         });
       }
+      //  UPDATE GAME STAT
+      if (this.obstacleready && this.vagueready) {
+        this.gamestats[0].time--
+        if (this.gamestats[0].time == 0) {
+          this.gamestats.shift();
+        }
+        if (this.gamestats.length == 0) {
+          this.gamestats.push({ name: "spawn", time: 1 })
+        }
 
+      }
 
     };
     this.updateDisplay = display => {
@@ -212,18 +234,57 @@ class Fight {
 
       if (!this.obstacleready && !this.vagueready) {
         display.cx.strokeText(
-        "Loading",
-          display.canvas.width/2 -(10*display.zoom),
-          display.canvas.height-100
+          "Loading",
+          display.canvas.width / 2 - (10 * display.zoom),
+          display.canvas.height - 100
         );
         display.cx.fillText(
           "Loading",
-          display.canvas.width/2 - (10*display.zoom),
-          display.canvas.height-100
+          display.canvas.width / 2 - (10 * display.zoom),
+          display.canvas.height - 100
         );
       }
 
+      switch (this.gamestats[0].name) {
+        case "begin":
+          display.cx.lineWidth = 5;
+          display.cx.fillStyle = "white";
+          display.cx.font = " " + 40 * display.zoom + "pt Ancherr";
+          display.cx.strokeText(
+            "Fight",
+            display.canvas.width / 2 - (40 * display.zoom),
+            display.canvas.height / 2
+          );
+          display.cx.fillText(
+            "Fight",
+            display.canvas.width / 2 - (40 * display.zoom),
+            display.canvas.height / 2
+          );
+          display.cx.font = " " + 20 * display.zoom + "pt Ancherr";
+          break
+        case "vague":
+          display.cx.lineWidth = 5;
+          display.cx.fillStyle = "white";
+          display.cx.font = " " + 40 * display.zoom + "pt Ancherr";
+          display.cx.strokeText(
+            "#" + (this.currVague + 1),
+            display.canvas.width / 2 - (10 * display.zoom),
+            display.canvas.height / 2
+          );
+          display.cx.fillText(
+            "#" + (this.currVague + 1),
+            display.canvas.width / 2 - (10 * display.zoom),
+            display.canvas.height / 2
+          );
+          display.cx.font = " " + 20 * display.zoom + "pt Ancherr";
+          break
+        default:
+          break;
+      }
     };
+
+
+
     this.updateGUIDisplay = display => {
       display.cx.font = " " + 20 * display.zoom + "pt Ancherr";
       display.cx.strokeStyle = display.color.red;
