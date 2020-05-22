@@ -8,7 +8,10 @@ class KeyboardListener {
             [68, "right"],
             [83, "down"],
             [79, "a"],
-            [80, "b"]
+            [80, "b"],
+            [82, "r"],
+            [27,"escape"]
+
         ]);
 
         this.listen = () => {

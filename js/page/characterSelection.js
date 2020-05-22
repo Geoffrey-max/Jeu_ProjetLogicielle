@@ -16,7 +16,6 @@ class CharacterSelection {
       this.game = game;
       this.nbrow = Math.ceil(this.characterList.length / this.charaPerLigne);
       this.updatePos();
-      console.log(this.pos);
     };
     this.updateDisplay = display => {
       var my_gradient = display.cx.createLinearGradient(

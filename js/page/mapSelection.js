@@ -17,7 +17,6 @@ class MapSelection {
         this.game = game;
         this.nbrow = Math.ceil(this.mapList.length / this.mapPerList);
         this.updatePos();
-        console.log(this.pos);
       };
       this.updateDisplay = display => {
         var my_gradient = display.cx.createLinearGradient(
@@ -115,9 +114,6 @@ class MapSelection {
                 this.pos.x = (this.pos.x + 1) % this.mapPerList;
               }
               this.indexchoose = this.pos.x + this.pos.y * this.mapPerList;
-              console.log(this.pos);
-  
-              console.log(this.indexchoose);
             }
           });
         });

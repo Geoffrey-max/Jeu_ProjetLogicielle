@@ -2,8 +2,6 @@ class Display {
   constructor(game) {
     this.frame = 0;
     this.zoom = 1;
-    this.canvasSprite = document.createElement("img");
-    this.canvasSprite.src = "img/tile.png";
     this.obstacleSprite = document.createElement("img");
     this.obstacleSprite.src = "img/game/maisonCasse.png";
     this.backgroundSprite = document.createElement("img");
@@ -71,7 +69,6 @@ class Display {
         this.canvas.width * this.zoom,
         this.canvas.height * this.zoom
       );
-      // this.cx.drawImage(this.canvasSprite, 0, 0, 384, 256, 0, 0, this.canvas.width, this.canvas.height);
       switch (this.game.gameState) {
         case this.game.gameStateEnum.MAINMENU:
           this.game.mainMenu.updateDisplay(this);
