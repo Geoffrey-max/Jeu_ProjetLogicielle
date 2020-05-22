@@ -25,15 +25,15 @@ class Game {
     
     // Dev env--------------
     this.endMenu = new EndMenu(this);
-    this.score = 1000
     // ---------------------
-
+    
     this.gameState = this.gameStateEnum.MAINMENU;
     this.mainMenu = new MainMenu(this);
-
+    
     this.player = new Player("red", new Vector2D(0, 0), new Vector2D(20, 20));
-
+    
     this.monsters = [];
+    this.score = 0
 
     this.map = {}
     this.gravity = new Vector2D(0, 0);
@@ -98,7 +98,9 @@ class Game {
         ["up", keys.get("up")],
         ["right", keys.get("right")],
         ["down", keys.get("down")],
-        ["a", keys.get("a")]
+        ["a", keys.get("a")],
+        ["r", keys.get("r")],
+        ["escape", keys.get("escape")]
       ]);
       this.frame++;
     };

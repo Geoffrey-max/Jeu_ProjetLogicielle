@@ -10,6 +10,7 @@ class Fight {
     this.currVague = 0
     this.nbzombispawn = 0
     this.spawnchrono = 0
+    this.pause = false
     game.request({ url: "https://apocalypse-military.herokuapp.com/vagues" })
       .then(data => {
         let vagues = JSON.parse(data);
@@ -39,8 +40,36 @@ class Fight {
 
     this.update = game => {
       this.game = game;
+      this.game.keys.forEach((key, id) => {
+        this.game.lastKeys.forEach((lastkey, lastid) => {
+          if (id === lastid) {
+            if (id === "a" && lastid === "a" && key) {
+              this.throwBullet();
+            }
+            if (id === "up" && lastid === "up" && key) {
+              this.lastDirection = "up";
+            }
+            if (id === "down" && lastid === "down" && key) {
+              this.lastDirection = "down";
+            }
+            if (id === "left" && lastid === "left" && key) {
+              this.lastDirection = "left";
+            }
+            if (id === "right" && lastid === "right" && key) {
+              this.lastDirection = "right";
+            }
+            if (id === "escape" && lastid === "escape" && key && !lastkey ) {
+              this.pause = this.pause? false : true
+            }
+            if (id === "r" && lastid === "r" && key && !lastkey) {
+              this.game.player.attackspeed = 60;
+              this.game.player.ammos = this.game.player.fixammos;
+            }
+          }
+        });
+      });
 
-      if (this.obstacleready && this.vagueready && this.gamestats[0].name != "begin") {
+      if (this.obstacleready && this.vagueready && this.gamestats[0].name != "begin" && !this.pause) {
 
         if (this.game.monsters.length == 0 && this.vagues[this.currVague].nbr == this.nbzombispawn) {
           this.currVague++
@@ -54,27 +83,6 @@ class Fight {
         }
 
         this.game.player.update(this.game);
-        this.game.keys.forEach((key, id) => {
-          this.game.lastKeys.forEach((lastkey, lastid) => {
-            if (id === lastid) {
-              if (id === "a" && lastid === "a" && key) {
-                this.throwBullet();
-              }
-              if (id === "up" && lastid === "up" && key) {
-                this.lastDirection = "up";
-              }
-              if (id === "down" && lastid === "down" && key) {
-                this.lastDirection = "down";
-              }
-              if (id === "left" && lastid === "left" && key) {
-                this.lastDirection = "left";
-              }
-              if (id === "right" && lastid === "right" && key) {
-                this.lastDirection = "right";
-              }
-            }
-          });
-        });
 
         if (this.gamestats[0].name == "spawn") {
           if (this.vagues.length >= this.currVague) {
@@ -122,6 +130,7 @@ class Fight {
                 this.game.monsters.length == 0
               ) {
                 this.game.monsters.splice(id, 1);
+                this.game.score += 10 * (this.currVague + 1)
               }
             });
           } else {
@@ -335,15 +344,32 @@ class Fight {
           );
         }
       }
-      // display.cx.fillText(
-      //   "X : " +
-      //   display.game.player.pos.x +
-      //   " Y: " +
-      //   display.game.player.pos.y +
-      //   "",
-      //   100 * display.zoom,
-      //   100 * display.zoom
-      // );
+      if (this.pause) {
+        display.cx.fillStyle = "rgba(255, 255, 255, 0.5)";
+        display.cx.fillRect(
+          display.canvas.width/2 - (70 * display.zoom),
+          display.canvas.height/2- (180 * display.zoom)/2,
+          70 * display.zoom,
+          180 * display.zoom
+        );
+        display.cx.fillRect(
+          display.canvas.width/2 - (70 * display.zoom)+ 90 * display.zoom,
+          display.canvas.height/2- (180 * display.zoom)/2,
+          70 * display.zoom,
+          180 * display.zoom
+        );
+        
+      }
+      
+      display.cx.fillText(
+        "X : " +
+        display.game.player.pos.x +
+        " Y: " +
+        display.game.player.pos.y +
+        "",
+        100 * display.zoom,
+        100 * display.zoom
+      );
       display.cx.lineWidth = 1;
 
     };
