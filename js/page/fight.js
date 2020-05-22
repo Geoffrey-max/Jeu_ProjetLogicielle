@@ -5,7 +5,7 @@ class Fight {
     this.lastDirection = "up";
     this.bulletSettings = [];
     this.bulletSize = 8;
-    this.gamestats = [{ name: "begin", time: 60 },{ name: "vague", time: 60 }]
+    this.gamestats = [{ name: "begin", time: 60 }, { name: "vague", time: 60 }]
     this.vagues = []
     this.currVague = 0
     this.nbzombispawn = 0
@@ -84,11 +84,13 @@ class Fight {
                   game,
                   this.vagues[this.currVague].life,
                   new Vector2D(16, 32),
-                  this.vagues[this.currVague].vitesse
-                )); 
+                  this.vagues[this.currVague].vitesse,
+                  this.game.player.pos.x,
+                  this.game.player.pos.y
+                ));
                 this.nbzombispawn++
-                this.spawnchrono =  Math.floor(Math.random() * (this.vagues[this.currVague].maxi - this.vagues[this.currVague].mini) + this.vagues[this.currVague].mini);
-  
+                this.spawnchrono = Math.floor(Math.random() * (this.vagues[this.currVague].maxi - this.vagues[this.currVague].mini) + this.vagues[this.currVague].mini);
+
               } else {
                 this.spawnchrono--
               }
@@ -335,15 +337,15 @@ class Fight {
           );
         }
       }
-      // display.cx.fillText(
-      //   "X : " +
-      //   display.game.player.pos.x +
-      //   " Y: " +
-      //   display.game.player.pos.y +
-      //   "",
-      //   100 * display.zoom,
-      //   100 * display.zoom
-      // );
+      display.cx.fillText(
+        "X : " +
+        display.game.player.pos.x +
+        " Y: " +
+        display.game.player.pos.y +
+        "",
+        100 * display.zoom,
+        100 * display.zoom
+      );
       display.cx.lineWidth = 1;
 
     };
