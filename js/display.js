@@ -20,7 +20,7 @@ class Display {
     this.JotaroSpritePP = document.createElement('img');
     this.JotaroSpritePP.src = 'img/game/jotaroPP.png';
     this.JotaroSpritePPGame = document.createElement('img');
-    this.JotaroSpritePPGame.src = 'img/game/jotaroPPGame.png';
+    this.JotaroSpritePPGame.src = 'img/game/JotaroPPGame.png';
     this.LSamuraiSprite = document.createElement('img');
     this.LSamuraiSprite.src = 'img/game/LSamuraiSprite.png';
     this.LSamuraiSpritePP = document.createElement('img');
