@@ -23,7 +23,6 @@ class Monster {
           this.posPlayerY = game.player.pos.y;
           this.posPlayer.x = this.posPlayerX;
           this.posPlayer.y = this.posPlayerY;
-          console.log("je suis passé dedans hop les nouvelles coordonnées: " + posPlayerX + " " + posPlayerY);
         }
         if (this.posPlayerX < this.pos.x) {
           this.posTest = this.pos;
@@ -31,7 +30,6 @@ class Monster {
           var XmovementTest = new Vector2D(this.speedTest.x, 0);
           this.newPosTest = this.posTest.plus(XmovementTest);
           game.obstacles.forEach(obstacle => {
-            console.log("je bloque dans le foreach c'est dingue btw posPlayerX < posX");
             if (rectAt(obstacle.pos, obstacle.size, this.newPosTest, this.size)) {
               if (this.posPlayerY === this.pos.y) {
                 this.posPlayerX = game.player.pos.x;
@@ -44,7 +42,6 @@ class Monster {
             }
           });
           if (bloque === 0) {
-            console.log("tout va pour le mieux btw posPlayerX < posX");
             this.speed.x = -this.walkSpeed;
           }
         }
@@ -54,7 +51,6 @@ class Monster {
           var XmovementTest = new Vector2D(this.speedTest.x, 0);
           this.newPosTest = this.posTest.plus(XmovementTest);
           game.obstacles.forEach(obstacle => {
-            console.log("je bloque dans le foreach c'est dingue btw posPlayerX > posX");
             if (rectAt(obstacle.pos, obstacle.size, this.newPosTest, this.size)) {
               if (this.posPlayerY === this.pos.y) {
                 this.posPlayerX = game.player.pos.x;
@@ -67,7 +63,6 @@ class Monster {
             }
           });
           if (bloque === 0) {
-            console.log("tout va pour le mieux btw posPlayerX > posX");
             this.speed.x = +this.walkSpeed;
           }
         }
@@ -128,44 +123,9 @@ class Monster {
       }
     };
 
-
-    this.move = game => {
-      if (game.player.pos.x != null) {
-        if (rectAt(this.pos, this.size, this.posPlayer, game.player.size)) {
-          this.posPlayerX = game.player.pos.x;
-          this.posPlayerY = game.player.pos.y;
-
-          console.log("je suis passé dedans hop les nouvelles coordonnées: " + posPlayerX + " " + posPlayerY);
-        }
-        if (this.posPlayerX < this.pos.x) {
-          this.speed.x = -this.walkSpeed;
-        }
-        else if (this.posPlayerX > this.pos.x) {
-          this.speed.x = +this.walkSpeed;
-        }
-        var Xmovement = new Vector2D(this.speed.x, 0);
-        var newPos = this.pos.plus(Xmovement);
-        this.pos = newPos;
-      }
-
-      if (game.player.pos.y != null) {
-        if (this.posPlayerY < this.pos.y) {
-          this.speed.y = -this.walkSpeed;
-        }
-        else if (this.posPlayerY > this.pos.y) {
-          this.speed.y = +this.walkSpeed;
-        }
-        var Ymovement = new Vector2D(0, this.speed.y);
-        var newPos = this.pos.plus(Ymovement);
-        this.pos = newPos;
-      }
-    };
-
-
     this.update = game => {
       this.moveX(game);
       this.moveY(game);
-      //this.move(game);
     };
   }
 }
