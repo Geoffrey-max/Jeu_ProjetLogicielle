@@ -4,6 +4,8 @@ APOCALYPSE MILITARY
 
 ATTENTION NE FONCTIONNE QUE SUR CHROME
 
+En cas de problèmes n'hésitez pas à rafraichir votre page
+
 ## Touches 
 ```
   Haut -> Z
