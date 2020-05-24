@@ -78,7 +78,7 @@ class Fight {
         }
 
         if (this.game.player.life <= 0) {
-          this.game.usernom = window.prompt("Quelle ests votre nom ?");
+          this.game.usernom = window.prompt("Quelle est votre nom ?");
 
 
           this.game.ranking = new Ranking(game)
